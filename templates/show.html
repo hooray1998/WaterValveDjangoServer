@@ -1,97 +1,157 @@
-﻿{% extends "base.html" %}
-{% block context %}
-            <div class="breadcrumb">您的位置： <a itemprop="breadcrumb" href="{% url 'index' %} }">首页</a> »
-                <a href="{% url 'index' %}list-{{ show.category.id }}.html">{{ show.category.name }}</a> »
-                <span class="current">正文</div>
-            <div class="post-main clearfix">
-                <h1 class="post-title">{{ show.title }}</h1>
-                <div class="post-con clearfix">
-                    <div class="article-meta">
-                        <span class="item">分类：<a href="{% url 'index' %}list-{{ show.category.id }}.html" rel="category tag">Python</a></span>
-                        <span class="item">作者：{{ show.user }}</span>
-                        <span class="item">浏览：{{ show.views }}</span>
-                        <span class="item">{{ show.created_time }}</span>
+{% extends "base.html" %}
+{% block head %}
+{% include "header.html" %}
+{% endblock %}
+{% block heart %}
+<article class="post-full post tag-react tag-next-js tag-antdesign ">
+<header class="post-full-header">
+<section class="post-full-meta">
+<!--NOTE:发表时间-->
+<time class="post-full-meta-date" datetime="{{ show.created_time }}">{{ show.created_time }}</time>
+<!--NOTE:文章标签-->
+<span class="date-divider">/</span>
+    {% for tag in show.tags.all %}
+        <a href="{% url 'index' %}tag/{{ tag.name }}">&nbsp;&nbsp;{{ tag.name }}</a>
+    {% endfor %}
+</section>
+<!--NOTE:文章标题-->
+<h1 class="post-full-title">{{ show.title }}</h1>
+</header>
+<!--NOTE:文章大图-->
+<figure class="post-full-image" style="background-image: url({% url 'index' %}static/{{ show.img }})">
+</figure>
+<section class="post-full-content">
+<div class="kg-card-markdown">
+<!--============================================================-->
+<!--NOTE:文章简介,第一句话字体较大-->
+<p>摘要</p>
+<!--NOTE:文章简介,字体正常-->
+<!--<p>这是接下来的一句话<code>这是有阴影的一句话</code></p>-->
+<!--NOTE:可以加个源码链接-->
+<!--<hr>-->
+<!--<p>本文源码参见：<a href="www.baidu.com">next-antd-app</a></p>-->
+    {{ show.excerpt }}
+<hr>
+<!--============================================================-->
+<!--NOTE:正文-->
+    {{ show.body|safe }}
 
-                    </div>
-                        {{ show.body|safe }}
-                    <article class="article-content">
-                    </article>
+<!--============================================================-->
+</div>
+</section>
+<footer class="post-full-footer">
+<section class="author-card">
+<!--NOTE:作者头像-->
 
-                    <div class="post-tag"><span class="fa fa-tags" aria-hidden="true"></span>标签：
+<img class="author-profile-image" src="https://www.gravatar.com/avatar/165b4e01e20d7a5812e565695d1db79e?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
+<section class="author-card-content">
+<h4 class="author-card-name"><a href="../author/hooray.html">Hooray</a></h4>
+<p>Read <a href="../author/hooray.html">more posts</a> by this author.</p>
+</section>
+</section>
+<div class="post-full-footer-right">
+<a class="author-card-button" href="../author/hooray.html">Read More</a>
+</div>
+</footer>
+</article>
+{% endblock %}
+{% block recommend %}
+<!--NOTE:下方文章推荐-->
+<aside class="read-next outer">
+<div class="inner">
+<div class="read-next-feed">
 
-                        {% for tag in show.tags.all %}
-                            <a href="{% url 'index' %}tag/{{ tag.name }}" rel="tag">{{ tag.name }}</a>
-                        {% endfor %}
+    {% for a in curcategory %}
 
-                    </div>
-                    <div>
-                        <div><b>上一篇：</b>
-                            {% if next_blog %}
-                                <a href="show-{{ next_blog.pk }}.html" class="article-tag">{{ next_blog }}</a>
-                            {% else %}
-                                没有了
-                            {% endif %}
-                        </div>
-                        <div><b>下一篇：</b>
-                            {% if previous_blog %}
-                                <a href="show-{{ previous_blog.pk }}.html" class="article-tag">{{ previous_blog }}</a>
-                            {% else %}
-                                没有了
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- /文章 -->
-
-
-            <div class="recommend  hidden-xs">
-
-                <div class="head clearfix"><span class="sp">您可能感兴趣的:</span></div>
-                <ul>
-
-                    {% for foo in curcategory %}
-                    <li>
-                        <div class="pic">
-                            <a href="{% url 'index' %}show-{{ foo.id }}.html" title="{{ foo.title }}"><img
-                                    src="{% url 'index' %}media/{{ foo.img }}"
-                                    srcset="{% url 'index' %}media/{{ foo.img }}"
-                                    alt="{{ foo.title }}" class="wp-post-image" width="145"
-                                    height="100"/></a>
-                        </div>
-                        <a class="descript " href="{% url 'index' %}show-{{ foo.id }}.html" rel="bookmark"
-                           title="{{ foo.title }}">{{ foo.title }}</a>
-                    </li>
-                    {% endfor %}
-                
-                </ul>
-            </div>
-
-
-            <!-- /文章列表 -->
+        <article class="post-card post tag-ghost-blog">
+        <a class="post-card-image-link" >
+            <div class="post-card-image" style="background-image: url({% url 'index' %}static/{{ a.img }})"></div>
+        </a>
+        <div class="post-card-content">
+        <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
+        <header class="post-card-header">
+        <span class="post-card-tags">{{ a.category.name }}</span>
+        <h2 class="post-card-title" >{{ a.title }}</h2>
+        </header>
+        <section class="post-card-excerpt">
+        <p>{{ a.excerpt }}</p>
         </section>
-        <!-- /post-left -->
-        <!-- /post-right -->
-        <aside class="post-right hidden-xs">
-            </section>
+        </a>
+        <footer class="post-card-meta">
 
-			{% include "right.html" %}
-            </section>
-            <section class="widget post-right-item"><h4 class="post-right-title">所有标签</h4>
-                <div class="tags">
-                    
-                        <a href="/tag/django">django</a>
-                    
-                        <a href="/tag/Python教程">Python教程</a>
-                    
-                        <a href="/tag/Django教程">Django教程</a>
-                    
-                        <a href="/tag/mysql">mysql</a>
-                    
-                        <a href="/tag/Linux">Linux</a>
-                    
-                </div>
-            </section>
-		</section><!-- /关注我们 -->
+        <img class="author-profile-image" src="https://www.gravatar.com/avatar/165b4e01e20d7a5812e565695d1db79e?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
+        <span class="post-card-author"><a href="{% url 'index' %}author.html">{{ a.user }}</a></span>
+        </footer>
+        </div>
+        </article>
+
+    {% endfor %}
+
+</div>
+</div>
+</aside>
+
+{% endblock %}
+{% block onescript %}
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
 {% endblock %}

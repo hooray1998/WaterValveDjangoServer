@@ -1,128 +1,51 @@
-﻿{% extends "base.html" %}
-{% block context %}
-            <div class="row">
-                <!-- /banner图 -->
-                <div class="col-md-6">
-                    <div id="featured" class="raxus-slider" data-autoplay="3000" data-keypress="false"
-                         data-thumbnail="bottom">
-                        <ul class="slider-relative" id="relative">
-
-                        {% comment %} 目前该表为空表 {% endcomment %}
-                            {% for banner in allbanner %}
-                                <li class="slide fix-width">
-                                    <a href="{{ banner.link_url }}" title="{{ banner.text_info }}">
-                                        <img src="{% url 'index' %}static/{{ banner.img }}" srcset="{% url 'index' %}static/{{ banner.img }}" alt="{{ banner.text_info }}"
-                                        <img src="static/picture/auth.jpg" srcset="media/banner/auth.jpg" alt="Django身份认证系统auth模块详解"
-                                             class="wp-post-image" width="370" height="290"/></a>
-                                    <span class="text ani-left"><strong>{{ banner.t }}</strong></span>
-                                </li>
-                            {% endfor %}
-
-                                <li class="slide fix-width">
-                                    <a href="https://www.django.cn/article/show-11.html" title="如何扩展Django用户模型">
-                                        <img src="static/picture/ggg.jpg" srcset="media/banner/ggg.jpg" alt="如何扩展Django用户模型"
-                                             class="wp-post-image" width="370" height="290"/></a>
-                                    <span class="text ani-left"><strong>如何扩展Django用户模型</strong></span>
-                                </li>
-
-                                <li class="slide fix-width">
-                                    <a href="https://www.django.cn/article/show-7.html" title="创建自己的第一个django项目">
-                                        <img src="static/picture/pycharm2.jpg" srcset="media/banner/pycharm2.jpg" alt="创建自己的第一个django项目"
-                                             class="wp-post-image" width="370" height="290"/></a>
-                                    <span class="text ani-left"><strong>创建自己的第一个django项目</strong></span>
-                                </li>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-                <!-- /banner图 -->
-
-                <!-- 首页推荐 -->
-                <div class="col-md-6">
-                    <div class="hotread ">
-                        <div class="title">推荐阅读</div>
-
-                        {% for tui in alltui %}
-                            <div class="caption">
-                                <h4><a href="{% url 'index' %}show-{{ tui.id }}.html" title="{{ tui.title }}" rel="bookmark">{{ tui.title }}</a></h4>
-                                <p>{{ tui.excerpt|truncatechars:"100" }}</p>
-                            </div>
-                        {% endfor %}
-
-
-                        
-                    </div>
-                </div>
-                <!-- /今日头条 -->
-            </div>
-            <!-- /文章列表 -->
-            <div class="index-main clearfix">
-                <div class="main-title">
-                    <h4 class="post-left-title fl">最新文章</h4>
-                    <div class="fr"></div>
-                </div>
-                <div class="row">
-				
-					{% for a in newarticle %}
-                        <div class="article-box clearfix excerpt-1">
-                            <div class="col-md-4">
-                                <div class="thumbnail">
-                                    <a href="{% url 'index' %}show-{{ a.id }}.html" title="{{ a.title }}">
-                                        <img src="media/{{ a.img }}"
-                                             srcset="media/{{ a.img }}"
-                                             alt="{{ a.title }}" class="wp-post-image" width="240" height="160"/></a>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <h2><a href="{% url 'index' %}show-{{ a.id }}.html" target="_blank" title="{{ a.title }}">{{ a.title }}</a></h2>
-                                <p class="txtcont hidden-xs"><a href="{% url 'index' %}show-{{ a.id }}.html" target="_blank"
-                                                                title="{{ a.title }}">{{ a.excerpt }}</a></p>
-                                <div class="meta"><span class="label label-info"><a
-                                        href="{% url 'index' %}list-{{ a.category.id }}.html">{{ a.category.name }}</a></span>
-                                    <time class="item"><i class="fa fa-clock-o"></i>{{ a.created_time|date:"Y年m月d日" }}
-                                    </time>
-                                </div>
-                            </div>
-                        </div>
-					{% endfor %}
-
-				</div>
-                <!-- /文章列表 -->
-        </section>
-        <!-- /post-left -->
-        <!-- /post-right -->
-        <aside class="post-right hidden-xs">
-            </section>
-            <section class="widget post-right-item">
-                <h4 class="post-right-title">热门文章排行</h4>
-                <ol class="hot-list">
-                    
-                    {% for hot in hotarticle %}
-                        <li><a href="{% url 'index' %}show-{{ hot.id }}.html" title="{{ hot.title }}">{{ hot.title }}</a></li>
-                    {% endfor %}
-
-                </ol>
-            </section>
-            </section>
-            </section>
-
-
-			{% include "right.html" %}
-            </section>
-		</section><!-- /关注我们 -->
+{% extends "base.html" %}
+{% block head %}
+<body class="home-template">
+<div class="site-wrapper">
+<header class="site-header outer " style="background-image: url({% url 'index' %}static/picture/bg.jpg)">
+<div class="inner">
+<div class="site-header-content">
+<h1 class="site-title">
+iTT✞
+</h1>
+<h2 class="site-description">代码集</h2>
+</div>
+<nav class="site-nav">
+<div class="site-nav-left">
+<ul class="nav" role="menu">
+<li class="nav-" role="menuitem"><a href="{% url 'index' %}">首页</a></li>
+<li class="nav-" role="menuitem"><a href="https://hooray1998.github.io/note">笔记</a></li>
+<li class="nav-" role="menuitem"><a href="{% url 'index' %}category">分类</a></li>
+<li class="nav-" role="menuitem"><a href="{% url 'index' %}book">书单</a></li>
+<li class="nav-" role="menuitem"><a href="{% url 'index' %}link">链接</a></li>
+<li class="nav-" role="menuitem"><a href="{% url 'index' %}about">关于</a></li>
+</ul>
+</div>
 {% endblock %}
-{% block friendlink %}
-        <div class="FriendLink hidden-xs clearfix">
-            <div class="title"><h3>友情链接：</h3></div>
-            <ul class="clears">
+{% block heart %}
+<div class="post-feed">
 
-                {% for l in link %}
-                    <li><a href="{{l.linkurl}}" target="_blank">{{ l.name }}</a></li>
-                {% endfor %}
-                
-            </ul>
-        </div>
+{% for a in newarticle %}
+    <article class="post-card post tag-algorithm">
+    <a class="post-card-image-link" href="{% url 'index' %}show-{{ a.id }}.html">
+    <div class="post-card-image" style="background-image: url({% url 'index' %}static/{{ a.img }})"></div>
+    </a>
+    <div class="post-card-content">
+    <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
+    <header class="post-card-header">
+    <span class="post-card-tags">{{ a.category.name }}</span>
+    <h2 class="post-card-title">{{ a.title }}</h2>
+    </header>
+    <section class="post-card-excerpt">
+    <p>{% url 'index' %}media/{{ a.img }}</p>
+    </section>
+    </a>
+    <footer class="post-card-meta">
+    <img class="author-profile-image" src="https://www.gravatar.com/avatar/165b4e01e20d7a5812e565695d1db79e?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
+    <span class="post-card-author"><a href="author.html">{{ a.user }}</a></span>
+    </footer>
     </div>
+    </article>
+{% endfor %}
+
 {% endblock %}

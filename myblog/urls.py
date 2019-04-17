@@ -30,6 +30,9 @@ urlpatterns = [
     path('show-<int:sid>.html', views.show, name='show'), # 内容页; 传入一个整型参数sid
     path('tag/<tag>', views.tag, name='tag'), # 标签列表页
     path('s/', views.search, name='search'), # 搜索页
-    path('about/', views.about, name='about'), # 联系我们页
+    path('about', views.about, name='about'), # 联系我们页
+    path('category', views.category, name='category'), # 联系我们页
+    path('book', views.book, name='book'), # 联系我们页
+    path('link', views.link, name='link'), # 联系我们页
 
 ]

@@ -100,15 +100,16 @@ def show(request, sid):
 def tag(request, tag):
     list = Article.objects.filter(tags__name=tag)  # 获取通过URL传进来的tag，然后筛选出对应文章
     tname = Tag.objects.get(name=tag)    # 获取当前文章的栏目名
+    tnums = len(list)
 
-    page = request.GET.get('page')  # 在URL中获取当前页面数
-    paginator = Paginator(list, 5)  # 对查询到的数据对象list进行分页，设置超过5条数据就分页
-    try:
-        list = paginator.page(page)     # 获取当前页码的记录
-    except PageNotAnInteger:
-        list = paginator.page(1)    # 如果用户输入的页码不是整数时,显示第1页的内容
-    except EmptyPage:
-        list = paginator.page(paginator.num_pages)  # 如果用户输入的页数不在系统的页码列表中时,显示最后一页的内容
+    # page = request.GET.get('page')  # 在URL中获取当前页面数
+    # paginator = Paginator(list, 5)  # 对查询到的数据对象list进行分页，设置超过5条数据就分页
+    # try:
+        # list = paginator.page(page)     # 获取当前页码的记录
+    # except PageNotAnInteger:
+        # list = paginator.page(1)    # 如果用户输入的页码不是整数时,显示第1页的内容
+    # except EmptyPage:
+        # list = paginator.page(paginator.num_pages)  # 如果用户输入的页数不在系统的页码列表中时,显示最后一页的内容
 
     return render(request, 'tags.html', locals())   # locals()的作用是返回一个包含当前作用域里面的所有变量和它们的值的字典。
 
@@ -132,4 +133,22 @@ def search(request):
 # 关于我们
 def about(request):
     allcategory = Category.objects.all()
-    return render(request, 'page.html', locals())
+    return render(request, 'about.html', locals())
+
+
+# 友情链接
+def link(request):
+    allcategory = Category.objects.all()
+    return render(request, 'link.html', locals())
+
+
+# 书单
+def book(request):
+    allcategory = Category.objects.all()
+    return render(request, 'book.html', locals())
+
+
+# 分类页面
+def category(request):
+    allcategory = Category.objects.all()
+    return render(request, 'category.html', locals())
