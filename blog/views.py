@@ -1,8 +1,9 @@
 from django.shortcuts import render
+import markdown
 from django.http import HttpResponse
 from .models import Article, Category, Tag, Tui, Banner,Link
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-#导入分页插件包
+# 导入分页插件包
 
 
 def global_variable(request):
@@ -80,13 +81,18 @@ def list(request, lid):
 # 内容页
 def show(request, sid):
     show = Article.objects.get(id=sid)  # 查询指定ID的文章
-
     hot = Article.objects.all().order_by('?')[:10]  # 内容下面的您可能感兴趣的文章，随机推荐
     curcategory = Article.objects.filter(category=show.category)[:3]
     previous_blog = Article.objects.filter(created_time__gt=show.created_time,category=show.category.id).first()
     next_blog = Article.objects.filter(created_time__lt=show.created_time,category=show.category.id).last()
     show.views = show.views + 1
     show.save()
+    show.body = markdown.markdown(show.body,
+                                  extensions=[
+                                      'markdown.extensions.extra',
+                                      'markdown.extensions.toc',
+                                      'markdown.extensions.codehilite',
+                                  ])
     return render(request, 'show.html', locals())
 
 

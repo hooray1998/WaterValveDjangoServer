@@ -57,11 +57,7 @@ class Article(models.Model):
     img = models.ImageField(upload_to='article_img/%Y/%m/%d/', verbose_name='文章图片', blank=True, null=True)
     # body = models.TextField() # origin
     # 我们上传文件，会自动上传到项目根目录media文件夹下对应的upimg和upfile目录里, media在前面配置过
-    body = UEditorField('内容', width=800, height=500,
-                        toolbars="full", imagePath="upimg/", filePath="upfile/",
-                        upload_settings={"imageMaxSize": 1024000},
-                        settings={}, command=None, blank=True
-                        )
+    body = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='作者')
     """
     文章作者，这里User是从django.contrib.auth.models导入的。

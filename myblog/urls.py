@@ -32,6 +32,4 @@ urlpatterns = [
     path('s/', views.search, name='search'), # 搜索页
     path('about/', views.about, name='about'), # 联系我们页
 
-    path('ueditor/', include('DjangoUeditor.urls')),
-    re_path('^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

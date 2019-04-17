@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
-    'DjangoUeditor',  # 注册APP应用
 ]
 
 MIDDLEWARE = [
