@@ -4,213 +4,39 @@
 {% endblock %}
 	{% block author %}
 <div class="site-header-content">
-<h1 class="site-title">Git</h1>
+<h1 class="site-title">{{ cname }}</h1>
 <h2 class="site-description">
-A collection of 10 posts
+A collection of {{ list|length }} posts
 </h2>
 </div>
 	{% endblock %}
 {% block heart %}
+
 <div class="post-feed">
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-branch-modal/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1498811008858-d95a730b2ffc?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;bd8f9f3a5a7842467e823c7f7a13bdef)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-branch-modal/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 分支模型</h2>
-</header>
-<section class="post-card-excerpt">
-<p>分支介绍 主分支（master） 开发分支（develop） 功能分支（Feature branches） 发布分支（Release branches） 热修复分支（Hotfix branches）</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-cherry-pick/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;6fc512b38422168e08969ad2cbd5895b)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-cherry-pick/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 选择合并</h2>
-</header>
-<section class="post-card-excerpt">
-<p>假定我们遇到这样一种情况：分支 A 上有若干次提交记录，但是分支 B 只需要合并分支 A 中的几次提交记录，该怎么合并呢？ 答案是用「cherry-pick」命令。 假定在分支 A 中有以下提交记录：</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-squash-commits/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1518462592603-0b6bac106032?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;b77d9ae30845524f5fd01f16caf79918)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-squash-commits/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 合并提交</h2>
-</header>
-<section class="post-card-excerpt">
-<p>Git 在执行 rebase 操作时，有时候会需要把当前分支中的若干次提交合并在一起，作为一次提交合并到主分支当中，这时候就要用到 squash 。顾名思义，squash 的用途是合并多次提交。 流程 初始状态</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-tags/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1518306965192-44da60abb26f?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;95db19a618af1317484b6f4b98eeb029)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-tags/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 标签管理</h2>
-</header>
-<section class="post-card-excerpt">
-<p>Git 可以非常方便的创建和管理标签。 创建标签 # 创建轻量标签 git tag v0.1.0 # 创建附注标签 git tag -a v1.0.0 -m 'version 1.0.0' # 为某次提交创建标签 git tag -a v1.2.0 f4991e9</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-aliases/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1414430349866-1c979b3d4665?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;ce2f2b881050c8e5930339fbf19cca28)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-aliases/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 设置别名</h2>
-</header>
-<section class="post-card-excerpt">
-<p>Git 有的命令比较长，有的需要频繁的使用，这两类命令可以通过定义别名的方式来简化我们的输入。 添加别名的方式，在 ~/.gitconfig 文件末尾添加</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-skills/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1497730026262-2f272ffa022b?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;3f8491377346e64dd9c724e7c82855a0)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-skills/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 常用技巧</h2>
-</header>
-<section class="post-card-excerpt">
-<p>撤销修改 撤销本地修改 git reset --hard 或者 git checkout -- . 切换分支 切换到前一分支 git checkout - 切换到某个分支</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-commit-with-pub-key/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1485856407642-7f9ba0268b51?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;cba42ae7e50cc9353df3528d7432bb31)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-commit-with-pub-key/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 公钥提交</h2>
-</header>
-<section class="post-card-excerpt">
-<p>为了避免每次提交都输入用户名和密码，大多数 Git 服务（比如 GitHub、GitLab 和 BitBucket等）都提供 SSH 公钥认证。要实现公钥提交，需要先生成 SSH 密钥组（公钥和私钥），再把公钥上传到服务器即可。 生成公钥</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-merge-rebase/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;da20deeaf065c0f971514c5f456ae8b7)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-merge-rebase/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 分支合并</h2>
-</header>
-<section class="post-card-excerpt">
-<p>当不同分支上的文件都发生了更改时，就会遇到把这些更改进行合并，这个时候要用到两个操作：Merge 或者 Rebase 。 Merge Merge 会把两个分支最新的版本（C3 和 C4）进行合并 ，并生成一个新的版本（C5）。</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-branches/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1518204919429-b447980c73bc?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;3a4acbe78cb9d98f5953c0b9c157addc)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-branches/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 分支管理</h2>
-</header>
-<section class="post-card-excerpt">
-<p>前文讲到 Git 的基础命令，这里谈一下 Git 的分支管理。 Git 的每一次提交都是为当前所有文件创建一个快照，而每创建一个分支则是添加一个可移动的指针，来定位版本修改的过程。</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
-<article class="post-card post tag-git">
-<a class="post-card-image-link" href="../../git-basic-cmd/index.html">
-<div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1515693987826-e3f55905dbcb?ixlib&#x3D;rb-0.3.5&amp;q&#x3D;80&amp;fm&#x3D;jpg&amp;crop&#x3D;entropy&amp;cs&#x3D;tinysrgb&amp;w&#x3D;1080&amp;fit&#x3D;max&amp;ixid&#x3D;eyJhcHBfaWQiOjExNzczfQ&amp;s&#x3D;d8a22355d150ec6e0b5c70791be960a9)"></div>
-</a>
-<div class="post-card-content">
-<a class="post-card-content-link" href="../../git-basic-cmd/index.html">
-<header class="post-card-header">
-<span class="post-card-tags">Git</span>
-<h2 class="post-card-title">Git 基础命令</h2>
-</header>
-<section class="post-card-excerpt">
-<p>用户设置 Git 应该是如今最常用的版本控制工具了，对于初学者来说，客户端会比较方便，但是熟悉一些基本的 Git 的命令会大大地提高我们的开发效率。 设置用户信息 git config --global user.name 'Hooray' git config --global user.email '<span class="__cf_email__" data-cfemail="d6bbb7bfba96a2b7b9f8bfbb">[email&#160;protected]</span>'</p>
-</section>
-</a>
-<footer class="post-card-meta">
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/eef863b3e7bf23276612b18cecd880c9?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-<span class="post-card-author"><a href="../../author/tao/index.html">Hooray</a></span>
-</footer>
-</div>
-</article>
+
+
+{% for a in list %}
+    <article class="post-card post tag-git">
+    <a class="post-card-image-link" href="{% url 'index' %}show-{{ a.id }}.html">
+    <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
+    </a>
+    <div class="post-card-content">
+    <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
+    <header class="post-card-header">
+    <span class="post-card-tags">{{ cname }}</span>
+    <h2 class="post-card-title">{{ a.title }}</h2>
+    </header>
+    <section class="post-card-excerpt">
+    <p>{{ a.excerpt }}</p>
+    </section>
+    </a>
+    <footer class="post-card-meta">
+	<img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
+    <span class="post-card-author"><a href="{% url 'index' %}author.html">{{ a.user }}</a></span>
+    </footer>
+    </div>
+    </article>
+{% endfor %}
+
 </div>
 {% endblock %}

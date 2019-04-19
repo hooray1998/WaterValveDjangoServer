@@ -31,8 +31,11 @@ urlpatterns = [
     path('tag/<tag>', views.tag, name='tag'), # 标签列表页
     path('s/', views.search, name='search'), # 搜索页
     path('about', views.about, name='about'), # 联系我们页
-    path('category', views.category, name='category'), # 联系我们页
+    path('author.html', views.author, name='author'), # 联系我们页
+    re_path('author*', views.author, name='author'), # 联系我们页
+    path('category', views.categoryPage, name='category'), # 联系我们页
     path('book', views.book, name='book'), # 联系我们页
     path('link', views.link, name='link'), # 联系我们页
-
+    path('test', views.test, name='test'), # 联系我们页
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),    # 使media中的图片正常显示
 ]

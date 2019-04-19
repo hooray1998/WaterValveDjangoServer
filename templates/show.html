@@ -18,13 +18,12 @@
 <h1 class="post-full-title">{{ show.title }}</h1>
 </header>
 <!--NOTE:文章大图-->
-<figure class="post-full-image" style="background-image: url({% url 'index' %}static/{{ show.img }})">
+<figure class="post-full-image" style="background-image: url({% url 'index' %}media/{{ show.img }})">
 </figure>
 <section class="post-full-content">
 <div class="kg-card-markdown">
 <!--============================================================-->
 <!--NOTE:文章简介,第一句话字体较大-->
-<p>摘要</p>
 <!--NOTE:文章简介,字体正常-->
 <!--<p>这是接下来的一句话<code>这是有阴影的一句话</code></p>-->
 <!--NOTE:可以加个源码链接-->
@@ -42,15 +41,14 @@
 <footer class="post-full-footer">
 <section class="author-card">
 <!--NOTE:作者头像-->
-
-<img class="author-profile-image" src="https://www.gravatar.com/avatar/165b4e01e20d7a5812e565695d1db79e?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
+<img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
 <section class="author-card-content">
 <h4 class="author-card-name"><a href="../author/hooray.html">Hooray</a></h4>
-<p>Read <a href="../author/hooray.html">more posts</a> by this author.</p>
+<p>Read <a href="{% url 'index' %}author.html">more posts</a> by this author.</p>
 </section>
 </section>
 <div class="post-full-footer-right">
-<a class="author-card-button" href="../author/hooray.html">Read More</a>
+<a class="author-card-button" href="{% url 'index' %}author.html">Read More</a>
 </div>
 </footer>
 </article>
@@ -61,97 +59,102 @@
 <div class="inner">
 <div class="read-next-feed">
 
-    {% for a in curcategory %}
-
-        <article class="post-card post tag-ghost-blog">
-        <a class="post-card-image-link" >
-            <div class="post-card-image" style="background-image: url({% url 'index' %}static/{{ a.img }})"></div>
-        </a>
-        <div class="post-card-content">
-        <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
-        <header class="post-card-header">
-        <span class="post-card-tags">{{ a.category.name }}</span>
-        <h2 class="post-card-title" >{{ a.title }}</h2>
-        </header>
-        <section class="post-card-excerpt">
-        <p>{{ a.excerpt }}</p>
-        </section>
-        </a>
-        <footer class="post-card-meta">
-
-        <img class="author-profile-image" src="https://www.gravatar.com/avatar/165b4e01e20d7a5812e565695d1db79e?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
-        <span class="post-card-author"><a href="{% url 'index' %}author.html">{{ a.user }}</a></span>
-        </footer>
-        </div>
+    {% if 3 < curcategory|length %}
+        <article class="read-next-card" style="background-image: url(https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60)">
+            <header class="read-next-card-header">
+                <small class="read-next-card-header-sitetitle">&mdash; iTT✞ &mdash;</small>
+                <h3 class="read-next-card-header-title"><a href="{% url 'index' %}list-{{curcategory.0.category.id}}.html">{{curcategory.0.category.name}}</a></h3>
+            </header>
+            <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5" /></svg>
+            </div>
+            <div class="read-next-card-content">
+                <ul>
+                        <li><a href="{% url 'index' %}show-{{ curcategory.0.id }}.html">{{ curcategory.0.title }}</a></li>
+                        <li><a href="{% url 'index' %}show-{{ curcategory.1.id }}.html">{{ curcategory.1.title }}</a></li>
+                        <li><a href="{% url 'index' %}show-{{ curcategory.2.id }}.html">{{ curcategory.2.title }}</a></li>
+                </ul>
+            </div>
+            <footer class="read-next-card-footer">
+                <a href="{% url 'index' %}list-{{curcategory.0.category.id}}.html">See all {{curcategory|length}} posts →</a>
+            </footer>
         </article>
+        {% if previous_blog %}
+        <article class="post-card post tag-ghost-blog">
+            <a class="post-card-image-link" >
+                <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ previous_blog.img }})"></div>
+            </a>
+            <div class="post-card-content">
+                <a class="post-card-content-link" href="{% url 'index' %}show-{{ previous_blog.id }}.html">
+                    <header class="post-card-header">
+                        <span class="post-card-tags">{{ previous_blog.category.name }}</span>
+                        <h2 class="post-card-title" >{{ previous_blog.title }}</h2>
+                    </header>
+                    <section class="post-card-excerpt">
+                        <p>{{ previous_blog.excerpt }}</p>
+                    </section>
+                </a>
+                <footer class="post-card-meta">
 
-    {% endfor %}
+					<img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
+                    <span class="post-card-author"><a href="{% url 'index' %}author.html">{{ previous_blog.user }}</a></span>
+                </footer>
+            </div>
+        </article>
+        {% endif %}
+        {% if next_blog %}
+        <article class="post-card post tag-ghost-blog">
+            <a class="post-card-image-link" >
+                <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ next_blog.img }})"></div>
+            </a>
+            <div class="post-card-content">
+                <a class="post-card-content-link" href="{% url 'index' %}show-{{ next_blog.id }}.html">
+                    <header class="post-card-header">
+                        <span class="post-card-tags">{{ next_blog.category.name }}</span>
+                        <h2 class="post-card-title" >{{ next_blog.title }}</h2>
+                    </header>
+                    <section class="post-card-excerpt">
+                        <p>{{ next_blog.excerpt }}</p>
+                    </section>
+                </a>
+                <footer class="post-card-meta">
+
+					<img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
+                    <span class="post-card-author"><a href="{% url 'index' %}author.html">{{ next_blog.user }}</a></span>
+                </footer>
+            </div>
+        </article>
+        {% endif %}
+
+    {% else %}
+        {% for a in curcategory %}
+
+            <article class="post-card post tag-ghost-blog">
+            <a class="post-card-image-link" >
+                <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
+            </a>
+            <div class="post-card-content">
+            <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
+            <header class="post-card-header">
+            <span class="post-card-tags">{{ a.category.name }}</span>
+            <h2 class="post-card-title" >{{ a.title }}</h2>
+            </header>
+            <section class="post-card-excerpt">
+            <p>{{ a.excerpt }}</p>
+            </section>
+            </a>
+            <footer class="post-card-meta">
+
+			<img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
+            <span class="post-card-author"><a href="{% url 'index' %}author.html">{{ a.user }}</a></span>
+            </footer>
+            </div>
+            </article>
+
+        {% endfor %}
+    {% endif %}
 
 </div>
 </div>
 </aside>
 
-{% endblock %}
-{% block onescript %}
-// NOTE: Scroll performance is poor in Safari
-// - this appears to be due to the events firing much more slowly in Safari.
-//   Dropping the scroll event and using only a raf loop results in smoother
-//   scrolling but continuous processing even when not scrolling
-$(document).ready(function () {
-    // Start fitVids
-    var $postContent = $(".post-full-content");
-    $postContent.fitVids();
-    // End fitVids
-
-    var progressBar = document.querySelector('progress');
-    var header = document.querySelector('.floating-header');
-    var title = document.querySelector('.post-full-title');
-
-    var lastScrollY = window.scrollY;
-    var lastWindowHeight = window.innerHeight;
-    var lastDocumentHeight = $(document).height();
-    var ticking = false;
-
-    function onScroll() {
-        lastScrollY = window.scrollY;
-        requestTick();
-    }
-
-    function onResize() {
-        lastWindowHeight = window.innerHeight;
-        lastDocumentHeight = $(document).height();
-        requestTick();
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(update);
-        }
-        ticking = true;
-    }
-
-    function update() {
-        var trigger = title.getBoundingClientRect().top + window.scrollY;
-        var triggerOffset = title.offsetHeight + 35;
-        var progressMax = lastDocumentHeight - lastWindowHeight;
-
-        // show/hide floating header
-        if (lastScrollY >= trigger + triggerOffset) {
-            header.classList.add('floating-active');
-        } else {
-            header.classList.remove('floating-active');
-        }
-
-        progressBar.setAttribute('max', progressMax);
-        progressBar.setAttribute('value', lastScrollY);
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', onScroll, {passive: true});
-    window.addEventListener('resize', onResize, false);
-
-    update();
-});
-</script>
 {% endblock %}

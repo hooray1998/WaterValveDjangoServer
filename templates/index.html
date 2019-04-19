@@ -28,7 +28,7 @@ iTT✞
 {% for a in newarticle %}
     <article class="post-card post tag-algorithm">
     <a class="post-card-image-link" href="{% url 'index' %}show-{{ a.id }}.html">
-    <div class="post-card-image" style="background-image: url({% url 'index' %}static/{{ a.img }})"></div>
+    <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
     </a>
     <div class="post-card-content">
     <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
@@ -37,11 +37,11 @@ iTT✞
     <h2 class="post-card-title">{{ a.title }}</h2>
     </header>
     <section class="post-card-excerpt">
-    <p>{% url 'index' %}media/{{ a.img }}</p>
+    <p>{{ a.excerpt }}</p>
     </section>
     </a>
     <footer class="post-card-meta">
-    <img class="author-profile-image" src="https://www.gravatar.com/avatar/165b4e01e20d7a5812e565695d1db79e?s=250&amp;d=mm&amp;r=x" alt="Hooray" />
+	<img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
     <span class="post-card-author"><a href="author.html">{{ a.user }}</a></span>
     </footer>
     </div>

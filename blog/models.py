@@ -12,6 +12,7 @@ from DjangoUeditor.models import UEditorField  # 头部增加这行代码导入U
 class Category(models.Model):
     name = models.CharField('博客分类', max_length=100)
     index = models.IntegerField(default=999, verbose_name='分类排序')
+    img = models.ImageField(verbose_name='类别图片', blank=True, null=True)
 
     class Meta:
         verbose_name = '博客分类'
