@@ -18,7 +18,11 @@
 <h1 class="post-full-title">{{ show.title }}</h1>
 </header>
 <!--NOTE:文章大图-->
-<figure class="post-full-image" style="background-image: url({% url 'index' %}media/{{ show.img }})">
+    {% if show.img|truncatechars:5 == "https" %}
+        <figure class="post-full-image" style="background-image: url({{ show.img }})">
+    {% else %}
+        <figure class="post-full-image" style="background-image: url({% url 'index' %}media/{{ show.img }})">
+    {% endif %}
 </figure>
 <section class="post-full-content">
 <div class="kg-card-markdown">
@@ -60,7 +64,11 @@
 <div class="read-next-feed">
 
     {% if 3 < curcategory|length %}
-        <article class="read-next-card" style="background-image: url(https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60)">
+        {% if curcategory.0.category.img|truncatechars:5 == "https" %}
+            <article class="read-next-card" style="background-image: url({{  curcategory.0.category.img }})">
+        {% else %}
+            <article class="read-next-card" style="background-image: url({% url 'index' %}media/{{  curcategory.0.category.img }})">
+        {% endif %}
             <header class="read-next-card-header">
                 <small class="read-next-card-header-sitetitle">&mdash; iTT✞ &mdash;</small>
                 <h3 class="read-next-card-header-title"><a href="{% url 'index' %}list-{{curcategory.0.category.id}}.html">{{curcategory.0.category.name}}</a></h3>
@@ -81,7 +89,11 @@
         {% if previous_blog %}
         <article class="post-card post tag-ghost-blog">
             <a class="post-card-image-link" >
-                <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ previous_blog.img }})"></div>
+                {% if previous_blog.img|truncatechars:5 == "https" %}
+                    <div class="post-card-image" style="background-image: url({{ previous_blog.img }})"></div>
+                {% else %}
+                    <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ previous_blog.img }})"></div>
+                {% endif %}
             </a>
             <div class="post-card-content">
                 <a class="post-card-content-link" href="{% url 'index' %}show-{{ previous_blog.id }}.html">
@@ -104,7 +116,11 @@
         {% if next_blog %}
         <article class="post-card post tag-ghost-blog">
             <a class="post-card-image-link" >
-                <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ next_blog.img }})"></div>
+                {% if next_blog.img|truncatechars:5 == "https" %}
+                    <div class="post-card-image" style="background-image: url({{ next_blog.img }})"></div>
+                {% else %}
+                    <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ next_blog.img }})"></div>
+                {% endif %}
             </a>
             <div class="post-card-content">
                 <a class="post-card-content-link" href="{% url 'index' %}show-{{ next_blog.id }}.html">
@@ -130,7 +146,11 @@
 
             <article class="post-card post tag-ghost-blog">
             <a class="post-card-image-link" >
-                <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
+                {% if a.img|truncatechars:5 == "https" %}
+                    <div class="post-card-image" style="background-image: url({{ a.img }})"></div>
+                {% else %}
+                    <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
+                {% endif %}
             </a>
             <div class="post-card-content">
             <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
@@ -156,5 +176,4 @@
 </div>
 </div>
 </aside>
-
 {% endblock %}

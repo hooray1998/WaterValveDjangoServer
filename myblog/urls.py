@@ -32,7 +32,6 @@ urlpatterns = [
     path('s/', views.search, name='search'), # 搜索页
     path('about', views.about, name='about'), # 联系我们页
     path('author.html', views.author, name='author'), # 联系我们页
-    re_path('author*', views.author, name='author'), # 联系我们页
     path('category', views.categoryPage, name='category'), # 联系我们页
     path('book', views.book, name='book'), # 联系我们页
     path('link', views.link, name='link'), # 联系我们页

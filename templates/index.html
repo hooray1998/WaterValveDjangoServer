@@ -28,12 +28,16 @@ iTT✞
 {% for a in newarticle %}
     <article class="post-card post tag-algorithm">
     <a class="post-card-image-link" href="{% url 'index' %}show-{{ a.id }}.html">
-    <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
+        {% if a.img|truncatechars:5 == "https" %}
+            <div class="post-card-image" style="background-image: url({{ a.img }})"></div>
+        {% else %}
+            <div class="post-card-image" style="background-image: url({% url 'index' %}media/{{ a.img }})"></div>
+        {% endif %}
     </a>
     <div class="post-card-content">
     <a class="post-card-content-link" href="{% url 'index' %}show-{{ a.id }}.html">
     <header class="post-card-header">
-    <span class="post-card-tags">{{ a.category.name }}</span>
+        <span class="post-card-tags">{{ a.category.name }}</span>
     <h2 class="post-card-title">{{ a.title }}</h2>
     </header>
     <section class="post-card-excerpt">

@@ -146,7 +146,8 @@ def about(request):
 
 # 该作者
 def author(request):
-    list = Article.objects.all().order_by('created_time').reverse()
+    # list = Article.objects.all().order_by('created_time').reverse()
+    list = Article.objects.all() # .order_by('created_time').reverse()
     return render(request, 'author.html', locals())
 
 # 友情链接
