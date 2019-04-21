@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="49f86a90-3ace-42b7-8205-42f28ebc2666" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/myblogvenv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -196,12 +195,12 @@
       <workItem from="1555652756118" duration="1375000" />
       <workItem from="1555686447139" duration="4186000" />
       <workItem from="1555728336803" duration="7139000" />
-      <workItem from="1555810698996" duration="1559000" />
+      <workItem from="1555810698996" duration="2221000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112811000" />
+    <option name="totallyTimeSpent" value="113473000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

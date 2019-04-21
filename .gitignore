@@ -1,5 +1,3 @@
 DjangoUeditor/
 __pycache__/
-manage.py
 my.db.sqlite3
-myblogvenv/
