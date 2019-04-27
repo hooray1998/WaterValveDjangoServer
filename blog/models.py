@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from DjangoUeditor.models import UEditorField  # 头部增加这行代码导入UEditorField
+# from DjangoUeditor.models import UEditorField  # 头部增加这行代码导入UEditorField
 
 
 # 导入Django自带用户模块
@@ -55,7 +55,8 @@ class Article(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name='标签', blank=True)
     # 使用外键关联标签表 与 标签 是多对多关系
 
-    img = models.ImageField(upload_to='article_img/%Y/%m/%d/', verbose_name='文章图片', blank=True, null=True)
+    img = models.TextField('文章图片', max_length=100, blank=True, null=True)
+    # img = models.ImageField(upload_to='article_img/%Y/%m/%d/', verbose_name='文章图片', blank=True, null=True)
     # body = models.TextField() # origin
     # 我们上传文件，会自动上传到项目根目录media文件夹下对应的upimg和upfile目录里, media在前面配置过
     body = models.TextField()

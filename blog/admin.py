@@ -5,8 +5,6 @@ from .models import Banner, Category, Tag, Tui, Article, Link
 
 
 # 导入需要管理的数据库表
-
-
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('id', 'category', 'title', 'tui', 'user', 'views', 'created_time')
@@ -27,6 +25,8 @@ class BannerAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'index', 'img')
+    list_display_links = ('id', 'name')
+    # 设置哪些字段可以点击进入编辑界面
 
 
 @admin.register(Tag)

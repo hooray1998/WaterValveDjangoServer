@@ -7,10 +7,10 @@
 <title>iTT</title>
 <meta name="HandheldFriendly" content="True" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel='stylesheet' id='bootstrap-css' href='{% static "css/screen.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='bootstrap-css' href='{% static "css/screen3.css" %}' type='text/css' media='all'/>
 <link rel='stylesheet' id='bootstrap-css' href='{% static "css/monokai.css" %}' type='text/css' media='all'/>
 <meta name="description" content="代码集" />
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href='{% static "images/favicon.ico" %}' type="image/x-icon" />
 <link rel="canonical" href="index.html" />
 <meta name="referrer" content="no-referrer-when-downgrade" />
 <link rel="next" href="page/2/index.html" />
@@ -86,7 +86,7 @@ ghost.init({
 <input class="subscribe-email" type="email" name="email" placeholder="youremail@example.com" />
 </div>
 <button class="" type="submit"><span>Subscribe</span></button>
-<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>
+{% comment %}<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>{% endcomment %}
 </form>
 </div>
 </div>
