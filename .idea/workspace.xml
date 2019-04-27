@@ -3,17 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="49f86a90-3ace-42b7-8205-42f28ebc2666" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myblog/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/myblog/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myblog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/myblog/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/screen.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/screen.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/screen2.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/link.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/link.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/show.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/temp" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/myblogvenv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -71,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/show.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="806">
-              <caret line="185" selection-start-line="185" selection-end-line="185" />
+            <state relative-caret-position="650">
+              <caret line="179" selection-start-line="179" selection-end-line="179" />
             </state>
           </provider>
         </entry>
@@ -285,12 +279,12 @@
       <workItem from="1555859882196" duration="5000000" />
       <workItem from="1556293687394" duration="101000" />
       <workItem from="1556348975892" duration="243000" />
-      <workItem from="1556375161943" duration="291000" />
+      <workItem from="1556375161943" duration="1629000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127019000" />
+    <option name="totallyTimeSpent" value="128357000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -604,8 +598,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/show.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="185" selection-start-line="185" selection-end-line="185" />
+        <state relative-caret-position="650">
+          <caret line="179" selection-start-line="179" selection-end-line="179" />
         </state>
       </provider>
     </entry>
