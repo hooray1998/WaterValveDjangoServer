@@ -8,12 +8,12 @@
 <meta name="HandheldFriendly" content="True" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel='stylesheet' id='bootstrap-css' href='{% static "css/screen9.css" %}' type='text/css' media='all'/>
+<link rel='stylesheet' id='bootstrap-css' href='{% static "css/comment.css" %}' type='text/css' media='all'/>
 <link rel='stylesheet' id='bootstrap-css' href='{% static "css/monokai.css" %}' type='text/css' media='all'/>
 <meta name="description" content="代码集" />
 <link rel="shortcut icon" href='{% static "images/favicon.ico" %}' type="image/x-icon" />
 <link rel="canonical" href="index.html" />
 <meta name="referrer" content="no-referrer-when-downgrade" />
-<link rel="next" href="page/2/index.html" />
 <meta property="og:site_name" content="iTT✞" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="iTT✞" />
@@ -74,21 +74,6 @@ ghost.init({
 </nav>
 </div>
 </footer>
-</div>
-<div id="subscribe" class="subscribe-overlay">
-<a class="subscribe-overlay-close" href="index.html#"></a>
-<div class="subscribe-overlay-content">
-<h1 class="subscribe-overlay-title">Subscribe to iTT✞</h1>
-<p class="subscribe-overlay-description">Stay up to date! Get all the latest &amp; greatest posts delivered straight to your inbox</p>
- <form method="post" action="./subscribe/" class="">
-<input class="confirm" type="hidden" name="confirm" /><input class="location" type="hidden" name="location" /><input class="referrer" type="hidden" name="referrer" />
-<div class="form-group">
-<input class="subscribe-email" type="email" name="email" placeholder="youremail@example.com" />
-</div>
-<button class="" type="submit"><span>Subscribe</span></button>
-{% comment %}<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script>{% endcomment %}
-</form>
-</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>

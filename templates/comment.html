@@ -1,0 +1,68 @@
+{% load comments %}
+  <div id="comments" class="clearfix"> 
+
+{% get_comment_form for show as show_form %}
+<span class="response">Responses <a id="cancel-comment-reply-link" href="{%url 'index'%}show-{show.id}.html" rel="nofollow" style="display:none" onclick="return TypechoComment.cancelReply();"> / Cancel Reply</a></span> 
+	<form method="post" action="{% comment_form_target %}" id="comment-form" class="comment-form" role="form" onsubmit="getElementById('misubmit').disabled=true;return true;"> 
+{% csrf_token %}
+ 
+    {# 必须的字段 #}
+    {{ show_form.object_pk }}
+    {{ show_form.content_type }}
+    {{ show_form.timestamp }}
+    {{ show_form.site }}
+    {{ show_form.submit_date }}
+    {{ show_form.security_hash }}
+
+
+		<input type="text" name="author" maxlength="12" id="author" class="form-control input-control clearfix" placeholder="Name (*)" value="" required="" /> 
+		<input type="email" name="mail" id="mail" class="form-control input-control clearfix" placeholder="Email (*)" value="" required="" /> 
+		<input type="url" name="url" id="url" class="form-control input-control clearfix" placeholder="Site (http://)" value="" /> 
+     <textarea name="text" id="textarea" class="form-control" placeholder="Your comment here. Be cool. " required=""></textarea> 
+     <button type="submit" class="submit" id="misubmit">SUBMIT</button> 
+	 <input type="hidden" name="next" value="{%url 'index'%}show-{{show.id}}.html"/>
+    </form> 
+
+ 
+ 
+    <ol class="comment-list"> 
+
+	{% get_comment_list for show as comments %}
+
+
+
+		{% for comment in comments %}
+     <li id="li-comment-2639" class="comment-body comment-parent comment-odd"> 
+      <div id="comment-2639"> 
+       <div class="comment-view" onclick=""> 
+        <div class="comment-header"> 
+         <img class="avatar" src="https://secure.gravatar.com/avatar/0a7d20da077d45435256f61dd982b388?s=80&amp;r=G&amp;d=mm" width="80" height="80" /> 
+		 <span class="comment-author">{{comment.user_name}}</span> 
+        </div> 
+        <div class="comment-content"> 
+         <span class="comment-author-at"></span> 
+		 <p>{{comment.comment}}</p>
+         <p></p> 
+        </div> 
+        <div class="comment-meta"> 
+			<time class="comment-time">{{comment.submit_date|date:"Y-m-d H:i"}}</time> 
+         <span class="comment-reply"><a href="https://www.linpx.com/p/the-move-to-change-the-domain-name-to-start-blog-revision.html/comment-page-1?replyTo=2639#respond-post-1" rel="nofollow" onclick="return TypechoComment.reply('comment-2639', 2639);">Reply</a></span> 
+        </div> 
+       </div> 
+      </div> </li> 
+	  {% empty %}
+	  <span> 暂无评论</span>
+	  {% endfor %}
+
+{% comment %}评论翻页{% endcomment %}
+    {% comment %}<div class="lists-navigator clearfix"> {% endcomment %}
+     {% comment %}<ol class="page-navigator">{% endcomment %}
+      {% comment %}<li class="current"><a href="https://www.linpx.com/p/the-move-to-change-the-domain-name-to-start-blog-revision.html/comment-page-1#comments">1</a></li>{% endcomment %}
+      {% comment %}<li><a href="https://www.linpx.com/p/the-move-to-change-the-domain-name-to-start-blog-revision.html/comment-page-2#comments">2</a></li>{% endcomment %}
+      {% comment %}<li><a href="https://www.linpx.com/p/the-move-to-change-the-domain-name-to-start-blog-revision.html/comment-page-3#comments">3</a></li>{% endcomment %}
+      {% comment %}<li><a href="https://www.linpx.com/p/the-move-to-change-the-domain-name-to-start-blog-revision.html/comment-page-4#comments">4</a></li>{% endcomment %}
+      {% comment %}<li class="next"><a href="https://www.linpx.com/p/the-move-to-change-the-domain-name-to-start-blog-revision.html/comment-page-2#comments">→</a></li>{% endcomment %}
+     {% comment %}</ol> {% endcomment %}
+    {% comment %}</div> {% endcomment %}
+	</ol>
+   </div> 
