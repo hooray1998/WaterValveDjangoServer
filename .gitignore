@@ -1,4 +1,6 @@
 uwsgi.log
-DjangoUeditor/
+DjangoUeditor
 __pycache__/
 my.db.sqlite3
+myblogvenv
+.idea

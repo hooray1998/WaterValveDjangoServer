@@ -2,7 +2,7 @@
 {% block head %}
 <body class="home-template">
 <div class="site-wrapper">
-<header class="site-header outer " style="background-image: url(http://all-freepicture.com/wp-content/uploads/2019/03/Astronaut-Dream-4k-3-.jpg)">
+<header class="site-header outer " style="background-image: url({% url 'index' %}static/picture/bg.jpg)">
 <div class="inner">
 <div class="site-header-content">
 <h1 class="site-title">
@@ -20,7 +20,7 @@ iTT✞
 <li class="nav-" role="menuitem"><a href="{% url 'index' %}link">链接</a></li>
 <li class="nav-" role="menuitem"><a href="{% url 'index' %}about">关于</a></li>
 </ul>
-</div>
+{#</div>#}
 {% endblock %}
 {% block heart %}
 <div class="post-feed">
