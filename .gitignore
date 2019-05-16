@@ -4,3 +4,4 @@ __pycache__/
 my.db.sqlite3
 myblogvenv
 .idea
+temp
