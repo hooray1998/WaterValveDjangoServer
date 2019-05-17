@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import markdown
+import markdown2
 from django.http import HttpResponse
 from .models import Article, Category, Tag, Tui, Banner,Link
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -97,11 +97,11 @@ def show(request, sid):
     next_blog = Article.objects.filter(created_time__lt=show.created_time,category=show.category.id).last()
     show.views = show.views + 1
     show.save()
-    show.body = markdown.markdown(show.body,
+    show.body = markdown2.markdown(show.body,
                                   extensions=[
-                                      'markdown.extensions.extra',
-                                      'markdown.extensions.toc',
-                                      'markdown.extensions.codehilite',
+                                      'markdown2.extensions.extra',
+                                      'markdown2.extensions.toc',
+                                      'markdown2.extensions.codehilite',
                                   ])
     return render(request, 'show.html', locals())
 

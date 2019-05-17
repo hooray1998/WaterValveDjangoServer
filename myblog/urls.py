@@ -37,7 +37,7 @@ urlpatterns = [
     path('link', views.link, name='link'), # 联系我们页
     path('test', views.test, name='test'), # 联系我们页
 
-    path('comments/', include('django_comments.urls')), # 评论功能
+    # path('comments/', include('django_comments.urls')), # 评论功能
 
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),    # 使media中的图片正常显示
 ]

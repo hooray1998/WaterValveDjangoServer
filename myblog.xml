@@ -1,5 +1,5 @@
 <uwsgi>    
-   <socket>127.0.0.1:8000</socket>
+   <socket>127.0.0.1:8888</socket>
    <chdir>/data/wwwroot/myblog/</chdir>
    <module>myblog.wsgi</module> 
    <processes>4</processes>
