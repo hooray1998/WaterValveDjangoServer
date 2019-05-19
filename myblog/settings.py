@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
-    'django_comments',
+    #'django_comments',
     'django.contrib.sites',
 ]
 SITE_ID = 1 # django的评论库是一个站点，所以需要添加sites的应用并设置当前django工程的站点id=1
