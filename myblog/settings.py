@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
-    #'django_comments',
+    # 'django_comments',
     'django.contrib.sites',
 ]
 SITE_ID = 1 # django的评论库是一个站点，所以需要添加sites的应用并设置当前django工程的站点id=1
@@ -127,6 +127,7 @@ STATIC_URL = '/static/'
 # 这个是设置静态文件夹目录的路径
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    '/data/env/pyweb/lib/python3.5/site-packages/django/contrib/admin/static/',
 )
 
 # 设置文件上传路径，图片上传、文件上传都会存放在此目录里
