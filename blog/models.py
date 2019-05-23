@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField('博客分类', max_length=100)
     index = models.IntegerField(default=999, verbose_name='分类排序')
-    img = models.ImageField(verbose_name='类别图片', blank=True, null=True)
+    img = models.TextField('类别图片', max_length=200, blank=True, null=True)
 
     class Meta:
         verbose_name = '博客分类'
@@ -97,7 +97,7 @@ class Banner(models.Model):
 # 友情链接
 class Link(models.Model):
     name = models.CharField('链接名称', max_length=20)
-    linkurl = models.URLField('网址', max_length=100)
+    linkurl = models.URLField('网址', max_length=200)
 
     def __str__(self):
         return self.name
