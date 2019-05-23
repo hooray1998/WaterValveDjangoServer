@@ -79,13 +79,28 @@ WSGI_APPLICATION = 'myblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+# }
+
 DATABASES = {
-    'default': {
+    'slave': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',   # mysql 驱动
+        'NAME': 'myblog_db',		# 数据库名
+        'USER': 'root',			    # 用户名
+        'PASSWORD': '123456',       # 密码
+        'HOST': 'localhost',		# 访问的地址（localhost|127.0.0.1|''） 都代表本机
+        'PORT': '3306',				# 端口号 mysql默认端口是3306
     }
 }
-
+# TODO: database setting
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -134,13 +149,6 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-# TODO: database setting
 
 '''
 # 配置MySql数据库
