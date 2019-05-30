@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+    <form action="/search-post" method="post">
+        {% csrf_token %}
+        {% for header in headers %}
+            <input type="text" name="{{ header }}">
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+
+    <table border="1">
+        <tr>
+            {% for header in headers %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for foo in list %}
+            <tr>
+                <td>{{ foo.title }}</td>
+                <td>{{ foo.excerpt }}</td>
+                <td>{{ foo.user }}</td>
+                <td>{{ foo.views }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

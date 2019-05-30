@@ -166,3 +166,32 @@ def book(request):
 def category(request):
     allcategory = Category.objects.all()
     return render(request, 'category.html', locals())
+
+
+# 表单
+def search_form(request):
+    return render(request, 'search_form.html')
+ 
+# 接收请求数据
+def search(request):  
+    request.encoding='utf-8'
+    if 'q' in request.GET:
+        message = '你搜索的内容为: ' + request.GET['q']
+    else:
+        message = '你提交了空表单'
+    return HttpResponse(message)
+
+ 
+# 接收POST请求数据
+def search_post(request):
+
+    headers = ['title', 'excerpt', 'tags', 'category', 'ctime', 'mtime', 'body', 'viewscount', 'user']
+    # ctx ={}
+    list = Article.objects.all()
+    if request.POST:
+        if request.POST['title']:
+            list = list.filter(title__icontains=request.POST['title'])  # 获取到搜索关键词通过标题进行匹配
+        if request.POST['viewscount']:
+            list = list.filter(views__gt=request.POST['viewscount'])  # 获取到搜索关键词通过标题进行匹配
+
+    return render(request, "post.html", locals())
