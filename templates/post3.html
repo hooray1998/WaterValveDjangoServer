@@ -46,7 +46,7 @@
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers3 %}
-		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+		<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
         {% endfor %}
 		<input type="submit" value="增加文章" class="button button-pill button-primary">
     </form>
@@ -54,25 +54,25 @@
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers4 %}
-		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+		<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
         {% endfor %}
-		<input type="submit" value="增加标签" class="button button-pill button-primary">
+		<input type="submit" value="增加标签" class="button button-pill button-primary" style="background-color:#7B72E9">
     </form>
 	<hr>
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers5 %}
-		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+		<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
         {% endfor %}
-		<input type="submit" value="删除博客" class="button button-pill button-primary">
+		<input type="submit" value="删除博客" class="button button-pill button-primary" style="background-color:#FF4351">
     </form>
 	<hr>
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers6 %}
-		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+		<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
         {% endfor %}
-        <input type="submit" value="更新博客" class="button button-pill button-primary">
+        <input type="submit" value="更新博客" class="button button-pill button-primary" style="background-color:#FEC04E">
     </form>
 
     <table border="1">
@@ -101,4 +101,39 @@
     </table>
 </section>
 </article>
+{% endblock %}
+{% block recommend %}
+<!--NOTE:下方文章推荐-->
+<aside class="read-next outer">
+	<div class="inner">
+		<div class="read-next-feed">
+
+		   <article class="post-card post tag-ghost-blog">
+			   <a class="post-card-image-link" >
+				   <div class="post-card-image" style="background-image: url(https://images.unsplash.com/photo-1525421106960-29ebe9f93dab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)"></div>
+			   </a>
+			   <div class="post-card-content">
+				   <a class="post-card-content-link" href="{% url 'index' %}search-post">
+					   <header class="post-card-header">
+						   <span class="post-card-tags">Mysql</span>
+						   <h2 class="post-card-title" >博客查询系统</h2>
+					   </header>
+					   <section class="post-card-excerpt">
+						   <p>对博客的查询操作</p>
+					   </section>
+				   </a>
+				   <footer class="post-card-meta">
+
+					   <img class="author-profile-image" src="https://s.gravatar.com/avatar/67112412c6d334572806ef4b2b6fc0c0?s=80" alt="朱亚非" />
+					   <span class="post-card-author"><a href="{% url 'index' %}author.html">朱亚非</a></span>
+				   </footer>
+			   </div>
+		   </article>
+
+		</div>
+	</div>
+</aside>
+
+{# 导入评论库模块的模版标签 #}
+
 {% endblock %}

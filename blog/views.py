@@ -226,8 +226,10 @@ def search_post3(request):
         if 'blog_id' in request.POST:
             if len(request.POST['blog_id']) and len(request.POST['tag_id']):
                 blog = Article.objects.get(id=request.POST['blog_id'])
-                addTag = Tag.objects.get(id=request.POST['tag_id'])
-                blog.tags.add(addTag)
+                taglist = request.POST['tag_id'].split(' ')
+                for foo in taglist:
+                    addTag = Tag.objects.get(id=foo)
+                    blog.tags.add(addTag)
         if 'blog_id5' in request.POST or 'title5' in request.POST:
             if request.POST['blog_id5']:
                 blog = Article.objects.get(id=request.POST['blog_id5']).delete()
