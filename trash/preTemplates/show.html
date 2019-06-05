@@ -1,0 +1,97 @@
+﻿{% extends "base.html" %}
+{% block context %}
+            <div class="breadcrumb">您的位置： <a itemprop="breadcrumb" href="{% url 'index' %} }">首页</a> »
+                <a href="{% url 'index' %}list-{{ show.category.id }}.html">{{ show.category.name }}</a> »
+                <span class="current">正文</div>
+            <div class="post-main clearfix">
+                <h1 class="post-title">{{ show.title }}</h1>
+                <div class="post-con clearfix">
+                    <div class="article-meta">
+                        <span class="item">分类：<a href="{% url 'index' %}list-{{ show.category.id }}.html" rel="category tag">Python</a></span>
+                        <span class="item">作者：{{ show.user }}</span>
+                        <span class="item">浏览：{{ show.views }}</span>
+                        <span class="item">{{ show.created_time }}</span>
+
+                    </div>
+                        {{ show.body|safe }}
+                    <article class="article-content">
+                    </article>
+
+                    <div class="post-tag"><span class="fa fa-tags" aria-hidden="true"></span>标签：
+
+                        {% for tag in show.tags.all %}
+                            <a href="{% url 'index' %}tag/{{ tag.name }}" rel="tag">{{ tag.name }}</a>
+                        {% endfor %}
+
+                    </div>
+                    <div>
+                        <div><b>上一篇：</b>
+                            {% if next_blog %}
+                                <a href="show-{{ next_blog.pk }}.html" class="article-tag">{{ next_blog }}</a>
+                            {% else %}
+                                没有了
+                            {% endif %}
+                        </div>
+                        <div><b>下一篇：</b>
+                            {% if previous_blog %}
+                                <a href="show-{{ previous_blog.pk }}.html" class="article-tag">{{ previous_blog }}</a>
+                            {% else %}
+                                没有了
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /文章 -->
+
+
+            <div class="recommend  hidden-xs">
+
+                <div class="head clearfix"><span class="sp">您可能感兴趣的:</span></div>
+                <ul>
+
+                    {% for foo in curcategory %}
+                    <li>
+                        <div class="pic">
+                            <a href="{% url 'index' %}show-{{ foo.id }}.html" title="{{ foo.title }}"><img
+                                    src="{% url 'index' %}media/{{ foo.img }}"
+                                    srcset="{% url 'index' %}media/{{ foo.img }}"
+                                    alt="{{ foo.title }}" class="wp-post-image" width="145"
+                                    height="100"/></a>
+                        </div>
+                        <a class="descript " href="{% url 'index' %}show-{{ foo.id }}.html" rel="bookmark"
+                           title="{{ foo.title }}">{{ foo.title }}</a>
+                    </li>
+                    {% endfor %}
+                
+                </ul>
+            </div>
+
+
+            <!-- /文章列表 -->
+        </section>
+        <!-- /post-left -->
+        <!-- /post-right -->
+        <aside class="post-right hidden-xs">
+            </section>
+
+			{% include "right.html" %}
+            </section>
+            <section class="widget post-right-item"><h4 class="post-right-title">所有标签</h4>
+                <div class="tags">
+                    
+                        <a href="/tag/django">django</a>
+                    
+                        <a href="/tag/Python教程">Python教程</a>
+                    
+                        <a href="/tag/Django教程">Django教程</a>
+                    
+                        <a href="/tag/mysql">mysql</a>
+                    
+                        <a href="/tag/Linux">Linux</a>
+                    
+                </div>
+            </section>
+		</section><!-- /关注我们 -->
+{% endblock %}

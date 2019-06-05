@@ -3,6 +3,7 @@ import markdown
 from django.http import HttpResponse
 from .models import Article, Category, Tag, Tui, Banner,Link
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.models import User
 # 导入分页插件包
 
 def test(request):
@@ -166,3 +167,83 @@ def book(request):
 def category(request):
     allcategory = Category.objects.all()
     return render(request, 'category.html', locals())
+
+
+# 表单
+def search_form(request):
+    return render(request, 'search_form.html')
+ 
+# 接收请求数据
+def search(request):  
+    request.encoding='utf-8'
+    if 'q' in request.GET:
+        message = '你搜索的内容为: ' + request.GET['q']
+    else:
+        message = '你提交了空表单'
+    return HttpResponse(message)
+
+# 接收POST请求数据
+def search_post(request):
+
+    headers = ['标题', '摘要','浏览量', '分类','标签']
+
+    list = Article.objects.all()
+    if request.POST:
+        if '标题' in request.POST and request.POST['标题']:
+            list = list.filter(title__icontains=request.POST['标题'])  # 标题包含文字
+        if '摘要' in request.POST and request.POST['摘要']:
+            list = list.filter(excerpt__icontains=request.POST['摘要'])  # 标题包含文字
+        if '浏览量' in request.POST and request.POST['浏览量']:
+            list = list.filter(views__gt=request.POST['浏览量'])  # 浏览量
+        if '分类' in request.POST and request.POST['分类']:
+            list = list.filter(category__name__icontains=request.POST['分类'])  # 标题包含文字
+        if '标签' in request.POST and request.POST['标签']:
+            print(type(request.POST['标签']))
+            taglist = request.POST['标签'].split(' ')
+            print(taglist)
+            for foo in taglist:
+                list = list.filter(tags__name__icontains=foo)
+
+    return render(request, "post.html", locals())
+
+
+def search_post3(request):
+    headers3 = ['标题', '摘要', '分类', '标签']
+    headers4 = ['Blog_ID', 'Tag_ID']
+    headers5 = ['Blog_ID_', '标题_']
+    headers6 = ['_Blog_ID_', '_标题_', '摘要', '分类_']
+    if request.POST:
+        if '标题' in request.POST:
+            if len(request.POST['标题']) and len(request.POST['摘要']) and len(request.POST['分类']):
+                Article.objects.create(title=request.POST['标题'], excerpt=request.POST['摘要'], category_id=request.POST['分类'], img='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', body='这是新增加的一篇博客', user_id=2)
+            if '标签' in request.POST and len(request.POST['标签']):
+                blog = Article.objects.get(title=request.POST['标题'])
+                taglist = request.POST['标签'].split(' ')
+                for foo in taglist:
+                    addTag = Tag.objects.get(id=foo)
+                    blog.tags.add(addTag)
+        if 'Blog_ID' in request.POST and 'Tag_ID' in request.POST and len(request.POST['Blog_ID']) and len(request.POST['Tag_ID']):
+                blog = Article.objects.get(id=request.POST['Blog_ID'])
+                taglist = request.POST['Tag_ID'].split(' ')
+                for foo in taglist:
+                    addTag = Tag.objects.get(id=foo)
+                    blog.tags.add(addTag)
+        if 'Blog_ID_' in request.POST or '标题_' in request.POST:
+            if request.POST['Blog_ID_']:
+                blog = Article.objects.get(id=request.POST['Blog_ID_']).delete()
+            if request.POST['标题_']:
+                blog = Article.objects.filter(title__icontains=request.POST['标题_']).delete()
+        if '_Blog_ID_' in request.POST and request.POST['_Blog_ID_']:
+            blog = Article.objects.get(id=request.POST['_Blog_ID_'])
+            if request.POST['_标题_']:
+                blog.title = request.POST['_标题_']
+            if request.POST['摘要']:
+                blog.excerpt = request.POST['摘要']
+            if request.POST['分类']:
+                blog.category_id = request.POST['分类_']
+            blog.save()
+
+    allcategorys = Category.objects.all()
+    alltags = Tag.objects.all()
+    list = Article.objects.all()
+    return render(request, "post3.html", locals())
