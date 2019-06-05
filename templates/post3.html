@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block head %}
+{% include "header.html" %}
+{% endblock %}
+{% block heart %}
+<article class="post-full post tag-react tag-next-js tag-antdesign ">
+<header class="post-full-header">
+<section class="post-full-meta">
+<!--NOTE:发表时间-->
+<time class="post-full-meta-date" datetime="">May,2019</time>
+<!--NOTE:文章标签-->
+<span class="date-divider">/</span>
+</section>
+<!--NOTE:文章标题-->
+<h1 class="post-full-title">博客管理系统</h1>
+</header>
+<!--NOTE:文章大图-->
+<section class="post-full-content">
+
+<!----------------------------TODO:核心部分-------------------------------->
+
+    <table border="1">
+        <tr>
+			<th>blog_id</th>
+            {% for header in headers3 %}
+                <th>{{ header }}</th>
+            {% endfor %}
+			<th>标签</th>
+        </tr>
+        {% for foo in list %}
+            <tr>
+                <td>{{ foo.id }}</td>
+                <td>{{ foo.title }}</td>
+                <td>{{ foo.excerpt }}</td>
+                <td>{{ foo.category.name }}</td>
+                <td>
+					{% for bar in foo.tags.all %}
+					{{ bar.name }},
+					{% endfor %}
+				
+				</td>
+            </tr>
+        {% endfor %}
+    </table>
+	<hr>
+    <form action="/search-post3" method="post">
+        {% csrf_token %}
+        {% for header in headers3 %}
+		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+        {% endfor %}
+		<input type="submit" value="增加文章" class="button button-pill button-primary">
+    </form>
+		<hr>
+    <form action="/search-post3" method="post">
+        {% csrf_token %}
+        {% for header in headers4 %}
+		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+        {% endfor %}
+		<input type="submit" value="增加标签" class="button button-pill button-primary">
+    </form>
+	<hr>
+    <form action="/search-post3" method="post">
+        {% csrf_token %}
+        {% for header in headers5 %}
+		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+        {% endfor %}
+		<input type="submit" value="删除博客" class="button button-pill button-primary">
+    </form>
+	<hr>
+    <form action="/search-post3" method="post">
+        {% csrf_token %}
+        {% for header in headers6 %}
+		<input type="text" class="button button-pill button-primary" placeholder="{{ header }}" >
+        {% endfor %}
+        <input type="submit" value="更新博客" class="button button-pill button-primary">
+    </form>
+
+    <table border="1">
+        <tr>
+			<th>ID</th>
+			<th>标签</th>
+        </tr>
+            {% for t in alltags %}
+            <tr>
+                <td>{{t.id}}</td>
+                <td>{{t.name}}</td>
+            </tr>
+			{% endfor %}
+    </table>
+    <table border="1">
+        <tr>
+			<th>ID</th>
+			<th>分类</th>
+        </tr>
+            {% for c in allcategorys %}
+            <tr>
+                <td>{{c.id}}</td>
+                <td>{{c.name}}</td>
+            </tr>
+			{% endfor %}
+    </table>
+</section>
+</article>
+{% endblock %}

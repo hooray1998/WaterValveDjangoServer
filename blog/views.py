@@ -3,6 +3,7 @@ import markdown
 from django.http import HttpResponse
 from .models import Article, Category, Tag, Tui, Banner,Link
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.models import User
 # 导入分页插件包
 
 def test(request):
@@ -181,17 +182,68 @@ def search(request):
         message = '你提交了空表单'
     return HttpResponse(message)
 
- 
 # 接收POST请求数据
 def search_post(request):
 
-    headers = ['title', 'excerpt', 'tags', 'category', 'ctime', 'mtime', 'body', 'viewscount', 'user']
-    # ctx ={}
+    headers = ['title1', 'excerpt1','viewscount1', 'user1']
+    headers2 = ['title2', 'category2','tag2']
+
     list = Article.objects.all()
+    list2 = Article.objects.all()
     if request.POST:
-        if request.POST['title']:
-            list = list.filter(title__icontains=request.POST['title'])  # 获取到搜索关键词通过标题进行匹配
-        if request.POST['viewscount']:
-            list = list.filter(views__gt=request.POST['viewscount'])  # 获取到搜索关键词通过标题进行匹配
+        if 'title1' in request.POST and request.POST['title1']:
+            list = list.filter(title__icontains=request.POST['title1'])  # 标题包含文字
+        if 'excerpt1' in request.POST and request.POST['excerpt1']:
+            list = list.filter(excerpt__icontains=request.POST['excerpt1'])  # 标题包含文字
+        if 'viewscount1' in request.POST and request.POST['viewscount1']:
+            list = list.filter(views__gt=request.POST['viewscount1'])  # 浏览量
+        if 'user1' in request.POST and request.POST['user1']:
+            list = list.filter(user=request.POST['user1'])  # 标题包含文字
+
+        if 'title2' in request.POST and request.POST['title2']:
+            list2 = list2.filter(title__icontains=request.POST['title2'])  # 标题包含文字
+        if 'category2' in request.POST and request.POST['category2']:
+            list2 = list2.filter(category__name__icontains=request.POST['category2'])  # 标题包含文字
+        if 'tag2' in request.POST and request.POST['tag2']:
+            print(type(request.POST['tag2']))
+            taglist = request.POST['tag2'].split(' ')
+            print(taglist)
+            for foo in taglist:
+                list2 = list2.filter(tags__name__icontains=foo)
 
     return render(request, "post.html", locals())
+
+
+def search_post3(request):
+    headers3 = ['title3', 'excerpt3', 'category3']
+    headers4 = ['blog_id', 'tag_id']
+    headers5 = ['blog_id5', 'title5']
+    headers6 = ['blog_id6', 'title6', 'excerpt6', 'category6']
+    if request.POST:
+        if 'title3' in request.POST:
+            if len(request.POST['title3']) and len(request.POST['excerpt3']) and len(request.POST['category3']):
+                Article.objects.create(title=request.POST['title3'], excerpt=request.POST['excerpt3'], category_id=request.POST['category3'], img='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', body='这是新增加的一篇博客', user_id=2)
+        if 'blog_id' in request.POST:
+            if len(request.POST['blog_id']) and len(request.POST['tag_id']):
+                blog = Article.objects.get(id=request.POST['blog_id'])
+                addTag = Tag.objects.get(id=request.POST['tag_id'])
+                blog.tags.add(addTag)
+        if 'blog_id5' in request.POST or 'title5' in request.POST:
+            if request.POST['blog_id5']:
+                blog = Article.objects.get(id=request.POST['blog_id5']).delete()
+            if request.POST['title5']:
+                blog = Article.objects.filter(title__icontains=request.POST['title5']).delete()
+        if 'blog_id6' in request.POST and request.POST['blog_id6']:
+            blog = Article.objects.get(id=request.POST['blog_id6'])
+            if request.POST['title6']:
+                blog.title = request.POST['title6']
+            if request.POST['excerpt6']:
+                blog.excerpt = request.POST['excerpt6']
+            if request.POST['category6']:
+                blog.category_id = request.POST['category6']
+            blog.save()
+
+    allcategorys = Category.objects.all()
+    alltags = Tag.objects.all()
+    list = Article.objects.all()
+    return render(request, "post3.html", locals())
