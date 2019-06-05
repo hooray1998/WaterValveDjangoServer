@@ -22,54 +22,25 @@
 
 		<!----------------------------TODO:核心部分-------------------------------->
 
-		<form action="/search-post" method="post">
-			{% csrf_token %}
-			{% for header in headers %}
-			<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
-			{% endfor %}
-			{% comment %}<input type="submit" value="Submit">{% endcomment %}
-			 <input type="submit" value="Go" class="button button-pill button-primary">
-		</form>
-
-			{% comment %}<table border="1">{% endcomment %}
-				<table id="rounded-corner" summary="2007 Major IT Companies' Profit">
-					<tr>
-						{% for header in headers %}
-						<th>{{ header }}</th>
-						{% endfor %}
-					</tr>
-					{% for foo in list %}
-					<tr>
-						<td>{{ foo.title }}</td>
-						<td>{{ foo.excerpt }}</td>
-						<td>{{ foo.views }}</td>
-						<td>{{ foo.user }}</td>
-					</tr>
-					{% endfor %}
-					<tfoot>
-						<tr>
-							<td colspan="4" class="rounded-foot-left"><em>The above data were fictional and made up, please do not sue me</em></td>
-							<td class="rounded-foot-right">&nbsp;</td>
-						</tr>
-					</tfoot>
-				</table>
 				<hr>
 				<form action="/search-post" method="post">
 					{% csrf_token %}
-					{% for header in headers2 %}
+					{% for header in headers %}
 					<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
 					{% endfor %}
 					<input type="submit" value="Go" class="button button-pill button-primary">
 				</form>
 					<table border="1">
 						<tr>
-							{% for header in headers2 %}
+							{% for header in headers %}
 							<th>{{ header }}</th>
 							{% endfor %}
 						</tr>
-						{% for foo in list2 %}
+						{% for foo in list %}
 						<tr>
 							<td>{{ foo.title }}</td>
+							<td>{{ foo.excerpt }}</td>
+							<td>{{ foo.views }}</td>
 							<td>{{ foo.category.name }}</td>
 							<td>
 								{% for bar in foo.tags.all %}
