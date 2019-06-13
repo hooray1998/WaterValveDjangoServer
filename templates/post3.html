@@ -12,7 +12,7 @@
 <span class="date-divider">/</span>
 </section>
 <!--NOTE:文章标题-->
-<h1 class="post-full-title">博客管理系统</h1>
+<h1 class="post-full-title">博客增删改系统</h1>
 </header>
 <!--NOTE:文章大图-->
 <section class="post-full-content">
@@ -25,7 +25,6 @@
             {% for header in headers3 %}
                 <th>{{ header }}</th>
             {% endfor %}
-			<th>标签</th>
         </tr>
         {% for foo in list %}
             <tr>
@@ -48,9 +47,9 @@
         {% for header in headers3 %}
 		<input type="text" class="button button-pill button-primary" style="background-color:#EEEEEE" placeholder="{{ header }}" name="{{ header }}" >
         {% endfor %}
-		<input type="submit" value="增加文章" class="button button-pill button-primary">
+		<input type="submit" value="增加博客" class="button button-pill button-primary">
     </form>
-		<hr>
+		<br>
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers4 %}
@@ -58,7 +57,7 @@
         {% endfor %}
 		<input type="submit" value="增加标签" class="button button-pill button-primary" style="background-color:#7B72E9">
     </form>
-	<hr>
+		<br>
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers5 %}
@@ -66,7 +65,7 @@
         {% endfor %}
 		<input type="submit" value="删除博客" class="button button-pill button-primary" style="background-color:#FF4351">
     </form>
-	<hr>
+		<br>
     <form action="/search-post3" method="post">
         {% csrf_token %}
         {% for header in headers6 %}
@@ -74,30 +73,34 @@
         {% endfor %}
         <input type="submit" value="更新博客" class="button button-pill button-primary" style="background-color:#FEC04E">
     </form>
-
+	<br>
     <table border="1">
         <tr>
 			<th>ID</th>
-			<th>标签</th>
-        </tr>
             {% for t in alltags %}
-            <tr>
-                <td>{{t.id}}</td>
-                <td>{{t.name}}</td>
-            </tr>
+				<td>{{t.id}}</td>
 			{% endfor %}
+        </tr>
+        <tr>
+			<th>标签</th>
+            {% for t in alltags %}
+                <td>{{t.name}}</td>
+			{% endfor %}
+        </tr>
     </table>
     <table border="1">
         <tr>
 			<th>ID</th>
-			<th>分类</th>
-        </tr>
             {% for c in allcategorys %}
-            <tr>
-                <td>{{c.id}}</td>
-                <td>{{c.name}}</td>
-            </tr>
+				<td>{{c.id}}</td>
 			{% endfor %}
+        </tr>
+        <tr>
+			<th>分类</th>
+            {% for c in allcategorys %}
+                <td>{{c.name}}</td>
+			{% endfor %}
+        </tr>
     </table>
 </section>
 </article>
