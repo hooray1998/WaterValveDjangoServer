@@ -239,7 +239,7 @@ def search_post3(request):
                 blog.title = request.POST['_标题_']
             if request.POST['摘要']:
                 blog.excerpt = request.POST['摘要']
-            if request.POST['分类']:
+            if request.POST['分类_']:
                 blog.category_id = request.POST['分类_']
             blog.save()
 
