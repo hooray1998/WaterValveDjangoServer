@@ -39,6 +39,7 @@ urlpatterns = [
 
     re_path(r'^search-form$', views.search_form),
     re_path(r'^search$', views.search),
+
     re_path(r'^search-post$', views.search_post),
     # re_path(r'^search-post2$', views.search_post2),
     re_path(r'^search-post3$', views.search_post3),
