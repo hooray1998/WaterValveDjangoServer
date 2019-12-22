@@ -1,44 +1,26 @@
 from django.contrib import admin
 
-# Register your models here.
-from .models import Banner, Category, Tag, Tui, Article, Link
 
+from .models import User, Device, UserDevice
+#导入需要管理的数据库表
 
-# 导入需要管理的数据库表
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'category', 'title', 'tui', 'user', 'views', 'created_time')
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('phone','open_id','img')
     # 文章列表里显示想要显示的字段
     list_per_page = 50
     # 满50条数据就自动分页
-    ordering = ('-created_time',)
-    # 后台数据列表排序方式
-    list_display_links = ('id', 'title')
+    ordering = ('-phone',)
+    #后台数据列表排序方式
+    list_display_links = ('phone', 'open_id')
     # 设置哪些字段可以点击进入编辑界面
 
 
-@admin.register(Banner)
-class BannerAdmin(admin.ModelAdmin):
-    list_display = ('id', 'text_info', 'img', 'link_url', 'is_active')
 
+@admin.register(Device)
+class DeviceAdmin(admin.ModelAdmin):
+    list_display = ('serial_num',)
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'index', 'img')
-    list_display_links = ('id', 'name')
-    # 设置哪些字段可以点击进入编辑界面
-
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-
-
-@admin.register(Tui)
-class TuiAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-
-
-@admin.register(Link)
-class LinkAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'linkurl')
+@admin.register(UserDevice)
+class UserDeviceAdmin(admin.ModelAdmin):
+    list_display = ('device_id', 'phone')
