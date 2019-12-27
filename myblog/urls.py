@@ -40,7 +40,7 @@ urlpatterns = [
 # /userDevices              | 用户设备列表 | (phone)->(device_list(...))
 # /userDevice               | 单个设备信息 | (phone,device_id)->(...)
 # /openDeviceCtrl           | 阀门开关控制 |
-# /openDegree           | 阀门开度控制 | (phone,device_id,number)->(OK)
+# /openDegree           | 阀门开度控制 | (phone,device_id,number)->(number)
 # /setCtrlType              | 控制方式     |
 # /setAccuracy              | 控制精度     |
 # /getAccessCtrl            | 获取控制权限 |
@@ -51,7 +51,6 @@ urlpatterns = [
 # /getAccessCtrlUsers       | 获取用户权限 |
 # /delAccessCtrlUsers       | 删除用户权限 |
 # /addAccessCtrlUsers       | 添加用户权限 |
-# /setDeviceTeam            | 设置设备分组 |
 
 
     # path('list-<int:lid>.html', views.list, name='list'), # 列表页; 传入一个整型参数lid

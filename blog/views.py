@@ -153,14 +153,14 @@ def openDegree(request):
             'res':True,
             'phone':request.GET['phone'],
             'ctrlRight':True,
-            'modified':True
+            'number':device_id.position
             }),content_type="application/json")
     else:
         return HttpResponse(json.dumps({
             'res':True,
             'phone':request.GET['phone'],
             'ctrlRight':False,
-            'modified':False
+            'number':device_id.position
             }),content_type="application/json")
 
 # 接收POST请求数据
