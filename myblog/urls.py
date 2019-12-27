@@ -40,7 +40,7 @@ urlpatterns = [
 # /userDevices              | 用户设备列表 | (phone)->(device_list(...))
 # /userDevice               | 单个设备信息 | (phone,device_id)->(...)
 # /openDeviceCtrl           | 阀门开关控制 |
-# /openDegree           | 阀门开度控制 | (phone,device_id,number)->(number)
+# /openDegree           | 阀门开度控制 | (phone,device_id,number)->(deviceInfo)
 # /setCtrlType              | 控制方式     |
 # /setAccuracy              | 控制精度     |
 # /getAccessCtrl            | 获取控制权限 |
