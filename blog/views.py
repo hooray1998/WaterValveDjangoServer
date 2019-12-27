@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core   import serializers
-import markdown
+#import markdown
 import json
 from django.http import HttpResponse
 

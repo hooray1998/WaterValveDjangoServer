@@ -55,7 +55,7 @@ class DeviceLog(models.Model):
 
 class Device(models.Model):
     # 自动生成的作为device_id
-    device_id = models.AutoField('设备标识', max_length=20, primary_key=True)
+    device_id = models.AutoField('设备标识', primary_key=True)
     serial_num = models.CharField('序列号', max_length=40,unique=True)
     name = models.CharField('设备名', max_length=40)
     remark = models.CharField('设备备注', max_length=50)

@@ -150,16 +150,16 @@ DATABASES = {
 }
 '''
 DATABASES = {
-    'slave': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
     'default': {
-        'ENGINE': 'django.db.backends.mysql',   # mysql 驱动
-        'NAME': 'WaterValveDB',		# 数据库名
-        'USER': 'root',			    # 用户名
-        'PASSWORD': '123456',       # 密码
-        'HOST': 'localhost',		# 访问的地址（localhost|127.0.0.1|''） 都代表本机
-        'PORT': '3306',				# 端口号 mysql默认端口是3306
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'wv.sqlite3'),
     }
+    #'default': {
+        #'ENGINE': 'django.db.backends.mysql',   # mysql 驱动
+        #'NAME': 'WaterValveDB',		# 数据库名
+        #'USER': 'root',			    # 用户名
+        #'PASSWORD': '123456',       # 密码
+        #'HOST': 'localhost',		# 访问的地址（localhost|127.0.0.1|''） 都代表本机
+        #'PORT': '3306',				# 端口号 mysql默认端口是3306
+    #},
 }
