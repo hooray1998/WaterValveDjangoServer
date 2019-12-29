@@ -24,25 +24,47 @@ from django.conf import settings
 # TODO: 理解这些URL的规则
 urlpatterns = [
     #path('admin/', admin.site.urls)
-    path('', views.test, name='index'),  # 默认index.html,输入url后默认匹配这一行，由views.hello函数返回一个HttpResponse对象
-    path('getOpenId', views.getOpenId, name='getOpenId'), # 列表页; 传入一个整型参数lid
-    path('bindPhone', views.bindPhone, name='bindPhone'), # 列表页; 传入一个整型参数lid
-    path('addDevice', views.addDevice, name='addDevice'), # 列表页; 传入一个整型参数lid
-    path('delDevice', views.delDevice, name='delDevice'), # 列表页; 传入一个整型参数lid
-    path('userDevices', views.userDevices, name='userDevices'), # 列表页; 传入一个整型参数lid
-    path('userDevice', views.userDevice, name='userDevice'), # 列表页; 传入一个整型参数lid
-    path('openDegree', views.openDegree, name='openDegree') # 列表页; 传入一个整型参数lid
+    path('registerDevice', views.registerDevice), 
+    path('getOpenId', views.getOpenId), 
+    path('bindPhone', views.bindPhone), 
+    path('addDevice', views.addDevice), 
+    path('delDevice', views.delDevice), 
+    path('userDevices', views.userDevices), 
+    path('userDeviceInfo', views.userDeviceInfo), 
+    path('userDeviceConfig', views.userDeviceConfig), 
+    path('deviceInfoCtrl', views.deviceInfoCtrl),
+    path('startAccessCtrl', views.startAccessCtrl),
+    path('updatePassword', views.updatePassword),
+    path('deviceLog', views.deviceLog),
+    path('addAccessRight', views.addAccessRight),
+    path('addCtrlRight', views.addCtrlRight),
+    path('delRight', views.delRight) 
 
-# /getOpenId                | 获得openid   | (code)->(openid)
-# /bindPhone                | 绑定手机     | (openid,phone)
-# /addDevice                | 添加设备     | (phone,serial_num,source)
-# /delDevice                | 删除设备     | (phone,device_id)
-# /userDevices              | 用户设备列表 | (phone)->(device_list(...))
-# /userDevice               | 单个设备信息 | (phone,device_id)->(...)
-# /openDeviceCtrl           | 阀门开关控制 |
-# /openDegree           | 阀门开度控制 | (phone,device_id,number)->(deviceInfo)
-# /setCtrlType              | 控制方式     |
-# /setAccuracy              | 控制精度     |
+## getOpenId        | code                           | openid
+## bindPhone        | openid,phone                   | res
+## addDevice        | phone,serialNum,source         | deviceList
+## delDevice        | phone,deviceId                 | deviceList
+## userDevices      | phone                          | deviceList
+## userDeviceInfo   | deviceId                       | deviceInfo
+## userDeviceConfig | deviceId                       | deviceConfig
+## deviceInfoCtrl   | deviceId,phone,xxx             | deviceInfo/deviceConfig  | xxx=(remarkName|name|remark|position|ioState|accuracy)
+## startAccessCtrl  | deviceId                       | device
+## updatePassword   | deviceId,password              | deviceConfig
+## deviceLog        | deviceId                       | log
+## addAccessRight   | deviceId,phone,aPhone          | deviceConfig,deviceRight
+## addCtrlRight     | deviceId,phone,source[,aPhone] | deviceConfig,deviceRight | source=2时增加aPhone
+## delRight         | deviceId,phone                 | res
+
+# /getOpenId                | 获得openid   | (code)->(openid)->(res)
+# /bindPhone                | 绑定手机     | (openid,phone)->(res)
+# /addDevice                | 添加设备     | (phone,serialNum,source)->(res, deviceList)
+# /delDevice                | 删除设备     | (phone,deviceId)->(res, deviceList)
+# /userDevices              | 用户设备列表 | (phone)->(deviceList)
+# /userDevice               | 单个设备信息 | (phone,deviceId)->(deviceInfo)
+# /openDeviceCtrl           | 阀门开关控制 |(phone,deviceId,number)->(res,deviceInfo)
+# /openDegree           | 阀门开度控制 | (phone,deviceId,number)->(res,deviceInfo)
+# /setCtrlType              | 控制方式     |(phone,deviceId,number)->(res,deviceInfo)
+# /setAccuracy              | 控制精度     |(phone,deviceId,number)->(res,deviceInfo)
 # /getAccessCtrl            | 获取控制权限 |
 # /userHistoryInfo          | 运行记录     |
 # /updateDeviceName         | 修改设备名称 |
@@ -73,3 +95,4 @@ urlpatterns = [
 
     # re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),    # 使media中的图片正常显示
     ]
+

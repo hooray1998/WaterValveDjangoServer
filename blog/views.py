@@ -2,17 +2,92 @@ from django.shortcuts import render
 from django.core   import serializers
 #import markdown
 import json
+import inspect
 from django.http import HttpResponse
 
 from .models import User, Device, UserDevice, DeviceLog
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # 导入分页插件包
 import requests
+import random
+
+def getDeviceRight(phone,userDevice):
+    '''
+    获得权限等信息
+    '''
+    device = userDevice.deviceId
+    deviceRight = {}
+    deviceRight['deviceId'] = device.deviceId
+    deviceRight['name'] = device.name
+    deviceRight['serialNum'] = device.serialNum
+    deviceRight['remarkName'] = userDevice.remarkName
+    deviceRight['admin'] = False
+    deviceRight['ctrl'] = False
+    # 管理员账户
+    if device.adminPhone.phone == phone:
+        deviceRight['admin'] = True
+        deviceRight['ctrl'] = True
+    # 未启用访问权限
+    if device.accessCtrl == 0:
+        deviceRight['ctrl'] = True
+    # 有控制权限
+    if userDevice.aAccess or userDevice.pAccess:
+        deviceRight['ctrl'] = True
+
+    return deviceRight
+
+
+def getDeviceLog(device):
+    '''
+    获得设备日志
+    '''
+    return [ {
+        'time':log.logTime.strftime('%Y-%m-%d %H:%M:%S'),
+        'type':log.logType,
+        'content':log.logContent
+        }
+        for log in DeviceLog.objects.filter(deviceId=device)
+        ]
+
+def getDeviceInfo(device):
+    '''
+    获得设备信息
+    '''
+    return {
+            'position':device.position,
+            'ioState':device.ioState,
+            'accuracy':device.accuracy,
+            'state':device.state,
+            'network':device.network,
+            'error':device.error
+            }
+
+
+def getDeviceConfig(device,userDevice):
+    '''
+    获得设备配置信息
+    '''
+    res = {
+            'admin':device.adminPhone.phone,
+            'name':device.name,
+            'remarkName':userDevice.remarkName,
+            'serialNum':device.serialNum,
+            'remark':device.remark,
+            'accessCtrl':device.accessCtrl,
+            'password':device.cPass,
+
+            # TODO: 用户权限管理
+            'source':userDevice.source,
+            'aAccess':userDevice.aAccess,
+            'pAccess':userDevice.pAccess
+            }
+    if userDevice.source == 2:
+        res['aPhone'] = userDevice.aPhone.phone
+    return res
+
 
 
 def global_variable(request):
-    #rightTui = Article.objects.filter(tui__id=2)[:6]
-    #alltags = Tag.objects.all()
     #allcategory = Category.objects.all()
     return locals()
 
@@ -22,7 +97,55 @@ def index(request):
     json_data = serializers.serialize("json", {'a':'AAAAAAAAAAAAAA'})
     return HttpResponse(json_data,content_type="application/json")
 
+def registerDevice(request):
+    '''
+    注册设备
+    '''
+    serialNum = request.GET['serialNum']
+    name = request.GET['name']
+    remark = request.GET['remark']
+
+    accessCtrl = 0
+    cPass = '123'
+
+    position = random.randint(0,100)
+    ioState = random.randint(0,1)
+    accuracy = random.randint(0,100)
+    state = random.randint(0,1)
+    network = random.randint(0,1)
+    error = random.randint(0,5)
+
+    device = Device(
+            serialNum = serialNum,
+            name = name,
+            remark = remark,
+
+            accessCtrl = accessCtrl,
+            cPass = cPass,
+
+            position = position,
+            ioState = ioState,
+            accuracy = accuracy,
+            state = state,
+            network = network,
+            error = error
+            )
+    device.save()
+
+    # json_data = serializers.serialize("json", device)
+    # print(device)
+    # print(json_data)
+    # return HttpResponse('{"name":"hahha"}',content_type="application/json")
+    return HttpResponse(json.dumps({
+        'res':True
+        }),content_type="application/json")
+
+
+## getOpenId| code|openid
 def getOpenId(request):
+    '''
+    获取openid
+    '''
     code = request.GET['code']
     r = requests.get('https://api.weixin.qq.com/sns/jscode2session?appid=wxef0519d42d63eaf7&secret=8ac05353cf3caf74c80e47db9dc01c67&js_code='+code+'&grant_type=authorization_code')
     res = json.loads(r.text)
@@ -34,13 +157,18 @@ def getOpenId(request):
         'openid':res['openid']
         }),content_type="application/json")
 
+
+## bindPhone|openid,phone|res
 def bindPhone(request):
+    '''
+    绑定手机和openid
+    '''
     openid = request.GET['openid']
     phone = request.GET['phone']
     print(phone, openid)
     if not openid or not phone:
         return HttpResponse(json.dumps({'res':False}),content_type="application/json")
-    user = User(phone=phone, open_id=openid, img='init_image')
+    user = User(phone=phone, openId=openid)
     user.save()
     return HttpResponse(json.dumps({
         'res':True,
@@ -48,161 +176,200 @@ def bindPhone(request):
         'phone':phone
         }),content_type="application/json")
 
+## addDevice|phone,serialNum,source|deviceList
 def addDevice(request):
-    device_id = Device.objects.get(serial_num=request.GET['serial_num'])
+    '''
+    用户添加设备
+    '''
+    deviceId = Device.objects.get(serialNum=request.GET['serialNum'])
     phone = User.objects.get(phone=request.GET['phone'])
-    print({
-        'res':True,
-        'serial_num':request.GET['serial_num'],
-        'source':request.GET['source'],
-        'phone':request.GET['phone']
-        })
     # 第一个绑定的作为管理员
-    if not UserDevice.objects.filter(device_id=device_id).exists():
-        device_id.adm_phone = phone
-        device_id.save()
+    if not UserDevice.objects.filter(deviceId=deviceId).exists():
+        deviceId.adminPhone = phone
+        deviceId.save()
 
     userdevice = UserDevice(
             phone = phone,
-            device_id = device_id,
-            remark_name = 'newDevice',
+            deviceId = deviceId,
+            remarkName = 'newDevice',
             source = int(request.GET['source']) # 0/1
             )
     userdevice.save()
-    return HttpResponse(json.dumps({
-        'res':True,
-        'serial_num':request.GET['serial_num'],
-        'phone':request.GET['phone']
-        }),content_type="application/json")
+    return userDevices(request)
     
 
 
+## delDevice|phone,deviceId|deviceList
 def delDevice(request):
-    device_id = Device.objects.get(device_id=request.GET['device_id'])
+    deviceId = Device.objects.get(deviceId=request.GET['deviceId'])
     phone = User.objects.get(phone=request.GET['phone'])
     querySet = UserDevice.objects.filter(
             phone = phone,
-            device_id = device_id
+            deviceId = deviceId
             )
     exists = querySet.exists()
     querySet.delete()
-    # if len(ud):
-        # for i in ud:
-            # i.delete()
-    return HttpResponse(json.dumps({
-        'res':True,
-        'exists':exists,
-        'serial_num':request.GET['device_id'],
-        'phone':request.GET['phone']
-        }),content_type="application/json")
+    return userDevices(request)
 
 
+## userDevices|phone|deviceList
 def userDevices(request):
+    deviceList = []
+    phone = request.GET['phone']
+    for ud in UserDevice.objects.filter(phone=phone):
+        deviceList.append(getDeviceRight(phone, ud))
 
-    deviceid_list = [{
-        'device_id':device.device_id.device_id,
-        'remark_name':device.remark_name}
-        for device in UserDevice.objects.filter(phone=request.GET['phone'])]
-    for d in deviceid_list:
-        device = Device.objects.get(device_id=d['device_id'])
-        d['name'] = device.name
-        d['serial_num'] = device.serial_num
-        d['admin'] = device.adm_phone.phone
     return HttpResponse(json.dumps({
         'res':True,
-        'phone':request.GET['phone'],
-        'deviceid_list':deviceid_list
+        'deviceList':deviceList
         }),content_type="application/json")
 
 
-
-
-def userDevice(request):
-    device = Device.objects.get(device_id=request.GET['device_id'])
-    deviceInfo = {
-            'device_id':request.GET['device_id'],
-            'name': device.name,
-            'openDegree': device.position,
-            'error': device.error
-            }
-    # 如果是管理员的话
-
-    if device.adm_phone.phone == request.GET['phone']:
-        deviceInfo['admin'] = 'Myself'
+## userDeviceInfo|deviceId|deviceInfo
+def userDeviceInfo(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
     return HttpResponse(json.dumps({
         'res':True,
-        'phone':request.GET['phone'],
-        'device':deviceInfo
+        'deviceInfo':getDeviceInfo(device)
         }),content_type="application/json")
 
-
-def openDegree(request):
-    ctrl = False
-    device_id = Device.objects.get(device_id=request.GET['device_id'])
+## userDeviceConfig|deviceId|deviceConfig
+def userDeviceConfig(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
     phone = User.objects.get(phone=request.GET['phone'])
-    ud = UserDevice.objects.get(device_id=device_id,phone=phone)
-    if device_id.access_ctrl == 0:
-        ctrl = True
-    elif ud.a_access or ud.p_access:
-        ctrl = True
+    ud = UserDevice.objects.get(deviceId=device,phone=phone)
+    return HttpResponse(json.dumps({
+        'res':True,
+        'deviceConfig':getDeviceConfig(device,ud)
+        }),content_type="application/json")
 
-    if ctrl:
-        device_id.position = int(request.GET['number'])
-        device_id.save()
+## deviceInfoCtrl|deviceId,phone,xxx|deviceInfo/deviceConfig
+def deviceInfoCtrl(request):
+    print("=========================================")
+    print("=========================================")
+    ctrl = False
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+    ud = UserDevice.objects.get(deviceId=device,phone=phone)
+
+    DeviceLog(deviceId=device,
+            logType=0,
+            logContent='P:%s %s'%(request.GET['phone'],inspect.stack()[0][3])).save()
+    
+    if 'remarkName' in request.GET:
+        ud.remarkName = request.GET['remarkName']
+        ud.save()
         return HttpResponse(json.dumps({
             'res':True,
-            'phone':request.GET['phone'],
-            'ctrlRight':True,
-            'number':device_id.position
+            'deviceConfig':getDeviceConfig(device,ud)
             }),content_type="application/json")
+
+    if 'position' in request.GET:
+        device.position = int(request.GET['position'])
+    elif 'ioState' in request.GET:
+        device.ioState = int(request.GET['ioState'])
+    elif 'accuracy' in request.GET:
+        device.accuracy = int(request.GET['accuracy'])
+    elif 'name' in request.GET:
+        device.name = request.GET['name']
+    elif 'remark' in request.GET:
+        device.remark = request.GET['remark']
+    device.save()
+
+    return HttpResponse(json.dumps({
+        'res':True,
+        'deviceInfo':getDeviceInfo(device)
+        }),content_type="application/json")
+
+
+## startAccessCtrl|deviceId|device
+def startAccessCtrl(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+    ud = UserDevice.objects.get(deviceId=device,phone=phone)
+    device.accessCtrl = True
+    device.save()
+    return HttpResponse(json.dumps({
+        'res':True,
+        'deviceConfig':getDeviceConfig(device,ud)
+        }),content_type="application/json")
+
+## updatePassword|deviceId,password|deviceConfig
+def updatePassword(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+    ud = UserDevice.objects.get(deviceId=device,phone=phone)
+    device.cPass = request.GET['password']
+    device.save()
+    for ud in UserDevice.objects.filter(deviceId=device):
+        ud.pAccess = 0
+        ud.save()
+
+    return HttpResponse(json.dumps({
+        'res':True,
+        'deviceConfig':getDeviceConfig(device,ud)
+        }),content_type="application/json")
+
+
+## deviceLog|deviceId|log
+def deviceLog(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    return HttpResponse(json.dumps({
+        'res':True,
+        'log':getDeviceLog(device)
+        }),content_type="application/json")
+
+
+## addAccessRight|deviceId,phone,aPhone|deviceConfig,deviceRight
+def addAccessRight(request):
+    '''
+    必然来自授权
+    '''
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+    aPhone = User.objects.get(phone=request.GET['aPhone'])
+    ud = UserDevice(deviceId=device,phone=phone,source=2,aPhone=aPhone)
+    ud.save()
+    return HttpResponse(json.dumps({
+        'res':True,
+        'deviceRight':getDeviceRight(phone.phone, ud),
+        'deviceConfig':getDeviceConfig(device,ud)
+        }),content_type="application/json")
+
+## addCtrlRight|deviceId,phone,source[,aPhone]|deviceConfig,deviceRight
+def addCtrlRight(request):
+    '''
+    输入密码获得
+    授权获得
+    '''
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+    aPhone = User.objects.get(phone=request.GET['aPhone'])
+    ud = 'init'
+    if not UserDevice.objects.filter(deviceId=device,phone=phone).exists():
+        ud = UserDevice(deviceId=device,phone=phone)
     else:
-        return HttpResponse(json.dumps({
-            'res':True,
-            'phone':request.GET['phone'],
-            'ctrlRight':False,
-            'number':device_id.position
-            }),content_type="application/json")
-
-# 接收POST请求数据
-
-def test(request):
-    name = "hello haiyan"
-    value="<div href=\"\">点击</div>"
-    i = 200
-    l = [11,22,33,44,55]
-    d = {"name":"haiyan","age":20}
-
-    class People(object): #继承元类
-        def __init__(self,name,age):
-            self.name = name
-            self.age = age
-        def __str__(self):
-            return self.name+str(self.age)
-        def dream(self):
-            return "你有梦想吗？"
-    #实例化
-    person_egon = People("egon",10)
-    person_dada = People("dada",34)
-    person_susan = People("susan",34)
-    person_list = [person_dada,person_egon,person_susan]
-
-    return render(request,"test.html",
-                    {
-                        "name":name,
-                        "i":i,
-                        "l":l,
-                        "d":d,  #键对应的是模板里的名字。值对应的是上面定义的变量
-                        "person_egon":person_egon,
-                        "person_dada":person_dada,
-                        "person_list":person_list,
-                    }
-              )
-    # return render(request,"index.html",locals())
-    #用locals()可以不用写上面的render了。不过用locals()，views里面用什么名。模板里面就得用什么名
-    # locals()局部的：用了locals就相当于都得按照上面的那样
+        ud = UserDevice.objects.get(deviceId=device,phone=phone)
+    ud.source = int(request.GET['source'])
+    if ud.source == 3: # 来自密码
+        ud.pAccess = 1
+    elif ud.source == 2: # 来自授权
+        ud.aAccess = 1
+        ud.aPhone = aPhone
+    ud.save()
+    return HttpResponse(json.dumps({
+        'res':True,
+        'deviceRight':getDeviceRight(phone.phone, ud),
+        'deviceConfig':getDeviceConfig(device,ud)
+        }),content_type="application/json")
 
 
+## delRight|deviceId,phone|res
+def delRight(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+    UserDevice.objects.filter(deviceId=device,phone=phone).delete()
+    return HttpResponse(json.dumps({
+        'res':True
+        }),content_type="application/json")
 
-
-
-# 首页
