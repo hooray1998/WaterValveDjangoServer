@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core   import serializers
 #import markdown
 import json
+import datetime
 import inspect
 from django.http import HttpResponse
 
@@ -21,6 +22,8 @@ def getDeviceRight(phone,userDevice):
     deviceRight['name'] = device.name
     deviceRight['serialNum'] = device.serialNum
     deviceRight['remarkName'] = userDevice.remarkName
+    deviceRight['state'] = device.state
+    deviceRight['position'] = device.position
     deviceRight['admin'] = False
     deviceRight['ctrl'] = False
     # 管理员账户
@@ -41,13 +44,51 @@ def getDeviceLog(device):
     '''
     获得设备日志
     '''
-    return [ {
-        'time':log.logTime.strftime('%Y-%m-%d %H:%M:%S'),
-        'type':log.logType,
-        'content':log.logContent
-        }
-        for log in DeviceLog.objects.filter(deviceId=device)
-        ]
+    '''
+    [
+            {
+                date:'sss'
+                logs:[
+                    {
+                        time:'fasd'
+                        content:'fasd'
+                    },
+                    {
+                        time:'fasd'
+                        content:'fasd'
+                    }
+                    ]
+                }
+            ]
+    '''
+    # return [ {
+        # 'time':log.logTime.strftime('%Y-%m-%d %H:%M:%S'),
+        # 'type':log.logType,
+        # 'content':log.logContent
+        # }
+        # for log in DeviceLog.objects.filter(deviceId=device)
+        # ]
+    logs = []
+    lastDate = False
+    curDate = dict()
+
+    for log in DeviceLog.objects.filter(deviceId=device):
+        # date = log.logTime.strftime('%c')
+        date = log.logTime.strftime('%Y.%m.%d')
+        if lastDate != date:
+            if lastDate:
+                logs.append(curDate)
+            curDate = dict()
+            curDate['date'] = date
+            curDate['logs'] = []
+        lastDate = date
+        curDate['logs'].append({
+            'time':(log.logTime+datetime.timedelta(hours=8)).strftime('%H:%M:%S'),
+            'content':log.logContent
+            })
+    logs.append(curDate)
+
+    return logs
 
 def getDeviceInfo(device):
     '''
@@ -152,9 +193,16 @@ def getOpenId(request):
     if 'openid' not in res:
         return HttpResponse(json.dumps({'res':False}),content_type="application/json")
     print('####openid:',res['openid'])
+
+    phone = User.objects.filter(openId=res['openid'])
+    if phone.exists():
+        phone = phone[0]
+    else:
+        phone = ''
     return HttpResponse(json.dumps({
         'res':True,
-        'openid':res['openid']
+        'openid':res['openid'],
+        'phone':phone
         }),content_type="application/json")
 
 
@@ -165,15 +213,16 @@ def bindPhone(request):
     '''
     openid = request.GET['openid']
     phone = request.GET['phone']
-    print(phone, openid)
-    if not openid or not phone:
-        return HttpResponse(json.dumps({'res':False}),content_type="application/json")
+        # return HttpResponse(json.dumps({'res':False}),content_type="application/json")
+    User.objects.filter(openId=openid).delete()
+    if User.objects.filter(phone=phone).exists():
+        return HttpResponse(json.dumps({
+            'res':False
+            }),content_type="application/json")
     user = User(phone=phone, openId=openid)
     user.save()
     return HttpResponse(json.dumps({
-        'res':True,
-        'openid':openid,
-        'phone':phone
+        'res':True
         }),content_type="application/json")
 
 ## addDevice|phone,serialNum,source|deviceList
@@ -252,9 +301,6 @@ def deviceInfoCtrl(request):
     phone = User.objects.get(phone=request.GET['phone'])
     ud = UserDevice.objects.get(deviceId=device,phone=phone)
 
-    DeviceLog(deviceId=device,
-            logType=0,
-            logContent='P:%s %s'%(request.GET['phone'],inspect.stack()[0][3])).save()
     
     if 'remarkName' in request.GET:
         ud.remarkName = request.GET['remarkName']
@@ -264,16 +310,43 @@ def deviceInfoCtrl(request):
             'deviceConfig':getDeviceConfig(device,ud)
             }),content_type="application/json")
 
+    # 管理员账户
+    if device.adminPhone.phone == phone:
+        ctrl = True
+    # 未启用访问权限
+    if device.accessCtrl == 0:
+        ctrl = True
+    # 有控制权限
+    if ud.aAccess or ud.pAccess:
+        ctrl = True
+    if not ctrl:
+        return HttpResponse(json.dumps({
+            'res':False,
+            'deviceInfo':getDeviceInfo(device),
+            'deviceConfig':getDeviceConfig(device,ud),
+            'deviceRight':getDeviceConfig(device,ud)
+            }),content_type="application/json")
+
     if 'position' in request.GET:
         device.position = int(request.GET['position'])
+        DeviceLog(deviceId=device, logType=0,
+                logContent='{}修改{}为{}'.format(request.GET['phone'],'position',request.GET['position'])).save()
     elif 'ioState' in request.GET:
         device.ioState = int(request.GET['ioState'])
+        DeviceLog(deviceId=device, logType=0,
+                logContent='{}修改{}为{}'.format(request.GET['phone'],'ioState',request.GET['ioState'])).save()
     elif 'accuracy' in request.GET:
         device.accuracy = int(request.GET['accuracy'])
+        DeviceLog(deviceId=device, logType=0,
+                logContent='{}修改{}为{}'.format(request.GET['phone'],'accuracy',request.GET['accuracy'])).save()
     elif 'name' in request.GET:
         device.name = request.GET['name']
+        DeviceLog(deviceId=device, logType=0,
+                logContent='{}修改{}为{}'.format(request.GET['phone'],'name',request.GET['name'])).save()
     elif 'remark' in request.GET:
         device.remark = request.GET['remark']
+        DeviceLog(deviceId=device, logType=0,
+                logContent='{}修改{}为{}'.format(request.GET['phone'],'remark',request.GET['remark'])).save()
     device.save()
 
     return HttpResponse(json.dumps({

@@ -72,11 +72,12 @@ def check(func,**params):
 ## addCtrlRight     | deviceId,phone,source[,aPhone] | deviceConfig,deviceRight | source=2时增加aPhone
 ## delRight         | deviceId,phone                 | res
 
+check('deviceLog', phone='phone_2', deviceId=1,source=2, aPhone='phone_1')
 # check('addCtrlRight', phone='phone_2', deviceId=1,source=2, aPhone='phone_1')
-# check('deviceInfoCtrl', phone='phone_2', deviceId=1, name='new-name')
+# check('deviceInfoCtrl', phone='phone_2', deviceId=1, name='me')
 # check('userDeviceInfo', phone='phone_2', deviceId=1)
 # check('userDeviceConfig', phone='phone_2', deviceId=1)
-check('userDevices', phone='phone_3')
+# check('userDevices', phone='phone_3')
 # check('delRight', phone='phone_2', deviceId=1)
 
 # check('')
