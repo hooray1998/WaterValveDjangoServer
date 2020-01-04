@@ -191,18 +191,28 @@ def getOpenId(request):
     r = requests.get('https://api.weixin.qq.com/sns/jscode2session?appid=wxef0519d42d63eaf7&secret=8ac05353cf3caf74c80e47db9dc01c67&js_code='+code+'&grant_type=authorization_code')
     res = json.loads(r.text)
     if 'openid' not in res:
-        return HttpResponse(json.dumps({'res':False}),content_type="application/json")
+        return HttpResponse(json.dumps({
+            'res':False,
+            'phone':'',
+            'openid':'',
+            'deviceList':[]
+            }),content_type="application/json")
     print('####openid:',res['openid'])
 
     phone = User.objects.filter(openId=res['openid'])
+    deviceList = []
     if phone.exists():
         phone = phone[0]
+        for ud in UserDevice.objects.filter(phone=phone):
+            deviceList.append(getDeviceRight(phone, ud))
     else:
         phone = ''
+
     return HttpResponse(json.dumps({
         'res':True,
         'openid':res['openid'],
-        'phone':phone
+        'deviceList':deviceList,
+        'phone':phone,
         }),content_type="application/json")
 
 
