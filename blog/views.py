@@ -205,6 +205,7 @@ def getOpenId(request):
         phone = phone[0]
         for ud in UserDevice.objects.filter(phone=phone):
             deviceList.append(getDeviceRight(phone, ud))
+        phone = phone.phone
     else:
         phone = ''
 
