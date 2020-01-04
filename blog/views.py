@@ -307,7 +307,7 @@ def deviceInfoCtrl(request):
             'res':True,
             'deviceInfo':getDeviceInfo(device),
             'deviceConfig':getDeviceConfig(device,ud),
-            'deviceRight':getDeviceConfig(device,ud)
+            'deviceRight':getDeviceRight(phone.phone, ud)
             }),content_type="application/json")
 
     # 管理员账户
@@ -324,7 +324,7 @@ def deviceInfoCtrl(request):
             'res':False,
             'deviceInfo':getDeviceInfo(device),
             'deviceConfig':getDeviceConfig(device,ud),
-            'deviceRight':getDeviceConfig(device,ud)
+            'deviceRight':getDeviceRight(phone.phone, ud)
             }),content_type="application/json")
 
     if 'position' in request.GET:
@@ -353,7 +353,7 @@ def deviceInfoCtrl(request):
         'res':True,
         'deviceInfo':getDeviceInfo(device),
         'deviceConfig':getDeviceConfig(device,ud),
-        'deviceRight':getDeviceConfig(device,ud)
+        'deviceRight':getDeviceRight(phone.phone, ud)
         }),content_type="application/json")
 
 
