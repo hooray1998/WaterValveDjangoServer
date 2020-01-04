@@ -403,13 +403,11 @@ def addAccessRight(request):
     device = Device.objects.get(deviceId=request.GET['deviceId'])
     phone = User.objects.get(phone=request.GET['phone'])
     aPhone = User.objects.get(phone=request.GET['aPhone'])
-    if not UserDevice.objects.fileter(deviceId=device,phone=phone).exists():
+    if not UserDevice.objects.filter(deviceId=device,phone=phone).exists():
         ud = UserDevice(deviceId=device,phone=phone,source=2,aPhone=aPhone)
         ud.save()
     return HttpResponse(json.dumps({
-        'res':True,
-        'deviceRight':getDeviceRight(phone.phone, ud),
-        'deviceConfig':getDeviceConfig(device,ud)
+        'res':True
         }),content_type="application/json")
 
 ## addCtrlRight|deviceId,phone,source[,aPhone]|deviceConfig,deviceRight
@@ -443,10 +441,27 @@ def addCtrlRight(request):
 ## delRight|deviceId,phone|res
 def delRight(request):
     device = Device.objects.get(deviceId=request.GET['deviceId'])
-    phone = User.objects.get(phone=request.GET['phone'])
-    UserDevice.objects.filter(deviceId=device,phone=phone).delete()
+    admPhone = User.objects.get(phone=request.GET['admPhone'])
+    for phone in request.GET['phone'].split(','):
+        phone = User.objects.get(phone=phone)
+        UserDevice.objects.filter(deviceId=device,phone=phone).delete()
+    rightList = []
+    for ud in UserDevice.objects.filter(deviceId=device):
+        if admPhone == ud.phone:
+            continue
+        right = {
+            'phone':ud.phone.phone,
+            'source':ud.source,
+            'aAccess':ud.aAccess,
+            'pAccess':ud.pAccess
+            }
+        if ud.source == 2:
+            right['aPhone'] = ud.aPhone.phone
+        rightList.append(right)
+
     return HttpResponse(json.dumps({
-        'res':True
+        'res':True,
+        'rightList':rightList
         }),content_type="application/json")
 
 
