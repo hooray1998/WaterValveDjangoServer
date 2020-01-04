@@ -294,8 +294,6 @@ def userDeviceConfig(request):
 
 ## deviceInfoCtrl|deviceId,phone,xxx|deviceInfo/deviceConfig
 def deviceInfoCtrl(request):
-    print("=========================================")
-    print("=========================================")
     ctrl = False
     device = Device.objects.get(deviceId=request.GET['deviceId'])
     phone = User.objects.get(phone=request.GET['phone'])
@@ -307,7 +305,9 @@ def deviceInfoCtrl(request):
         ud.save()
         return HttpResponse(json.dumps({
             'res':True,
-            'deviceConfig':getDeviceConfig(device,ud)
+            'deviceInfo':getDeviceInfo(device),
+            'deviceConfig':getDeviceConfig(device,ud),
+            'deviceRight':getDeviceConfig(device,ud)
             }),content_type="application/json")
 
     # 管理员账户
@@ -351,7 +351,9 @@ def deviceInfoCtrl(request):
 
     return HttpResponse(json.dumps({
         'res':True,
-        'deviceInfo':getDeviceInfo(device)
+        'deviceInfo':getDeviceInfo(device),
+        'deviceConfig':getDeviceConfig(device,ud),
+        'deviceRight':getDeviceConfig(device,ud)
         }),content_type="application/json")
 
 
@@ -445,4 +447,29 @@ def delRight(request):
     return HttpResponse(json.dumps({
         'res':True
         }),content_type="application/json")
+
+
+def rightList(request):
+    device = Device.objects.get(deviceId=request.GET['deviceId'])
+    phone = User.objects.get(phone=request.GET['phone'])
+
+    rightList = []
+    for ud in UserDevice.objects.filter(deviceId=device):
+        if phone == ud.phone:
+            continue
+        right = {
+            'phone':ud.phone.phone,
+            'source':ud.source,
+            'aAccess':ud.aAccess,
+            'pAccess':ud.pAccess
+            }
+        if ud.source == 2:
+            right['aPhone'] = ud.aPhone.phone
+        rightList.append(right)
+
+    return HttpResponse(json.dumps({
+        'res':True,
+        'rightList':rightList
+        }),content_type="application/json")
+
 

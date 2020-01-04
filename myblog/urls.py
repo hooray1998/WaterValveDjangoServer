@@ -38,7 +38,8 @@ urlpatterns = [
     path('deviceLog', views.deviceLog),
     path('addAccessRight', views.addAccessRight),
     path('addCtrlRight', views.addCtrlRight),
-    path('delRight', views.delRight) 
+    path('delRight', views.delRight),
+    path('rightList', views.rightList)
 
 ## getOpenId        | code                           | openid
 ## bindPhone        | openid,phone                   | res
