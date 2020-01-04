@@ -403,8 +403,9 @@ def addAccessRight(request):
     device = Device.objects.get(deviceId=request.GET['deviceId'])
     phone = User.objects.get(phone=request.GET['phone'])
     aPhone = User.objects.get(phone=request.GET['aPhone'])
-    ud = UserDevice(deviceId=device,phone=phone,source=2,aPhone=aPhone)
-    ud.save()
+    if not UserDevice.objects.fileter(deviceId=device,phone=phone).exists():
+        ud = UserDevice(deviceId=device,phone=phone,source=2,aPhone=aPhone)
+        ud.save()
     return HttpResponse(json.dumps({
         'res':True,
         'deviceRight':getDeviceRight(phone.phone, ud),
