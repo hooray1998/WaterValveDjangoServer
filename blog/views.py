@@ -248,14 +248,17 @@ def addDevice(request):
         deviceId.adminPhone = phone
         deviceId.save()
 
-    userdevice = UserDevice(
-            phone = phone,
-            deviceId = deviceId,
-            remarkName = 'newDevice',
-            source = int(request.GET['source']) # 0/1
-            )
-    userdevice.save()
-    return userDevices(request)
+    if not UserDevice.objects.filter(phone=phone,deviceId=deviceId).exists():
+        userdevice = UserDevice(
+                phone = phone,
+                deviceId = deviceId,
+                remarkName = 'newDevice',
+                source = int(request.GET['source']) # 0/1
+                )
+        userdevice.save()
+        return userDevices(request)
+    else:
+        return userDevices(request, False)
     
 
 
@@ -273,14 +276,14 @@ def delDevice(request):
 
 
 ## userDevices|phone|deviceList
-def userDevices(request):
+def userDevices(request, flag=True):
     deviceList = []
     phone = request.GET['phone']
     for ud in UserDevice.objects.filter(phone=phone):
         deviceList.append(getDeviceRight(phone, ud))
 
     return HttpResponse(json.dumps({
-        'res':True,
+        'res':flag,
         'deviceList':deviceList
         }),content_type="application/json")
 
