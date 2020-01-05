@@ -222,7 +222,7 @@ def getPhone(request):
     获取phone,deviceList
     '''
     openid = request.GET['openid']
-    phone = User.objects.filter(openId=res['openid'])
+    phone = User.objects.filter(openId=openid)
     deviceList = []
     if phone.exists():
         phone = phone[0]
