@@ -26,6 +26,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls)
     path('registerDevice', views.registerDevice), 
     path('getOpenId', views.getOpenId), 
+    path('getPhone', views.getPhone), 
     path('bindPhone', views.bindPhone), 
     path('addDevice', views.addDevice), 
     path('delDevice', views.delDevice), 

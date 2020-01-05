@@ -181,8 +181,6 @@ def registerDevice(request):
         'res':True
         }),content_type="application/json")
 
-
-## getOpenId| code|openid
 def getOpenId(request):
     '''
     获取openid
@@ -217,6 +215,31 @@ def getOpenId(request):
         }),content_type="application/json")
 
 
+
+## getOpenId| code|openid
+def getPhone(request):
+    '''
+    获取phone,deviceList
+    '''
+    openid = request.GET['openid']
+    phone = User.objects.filter(openId=res['openid'])
+    deviceList = []
+    if phone.exists():
+        phone = phone[0]
+        for ud in UserDevice.objects.filter(phone=phone):
+            deviceList.append(getDeviceRight(phone, ud))
+        phone = phone.phone
+    else:
+        phone = ''
+
+    return HttpResponse(json.dumps({
+        'res':True,
+        'openid':res['openid'],
+        'deviceList':deviceList,
+        'phone':phone,
+        }),content_type="application/json")
+
+
 ## bindPhone|openid,phone|res
 def bindPhone(request):
     '''
@@ -225,7 +248,16 @@ def bindPhone(request):
     openid = request.GET['openid']
     phone = request.GET['phone']
         # return HttpResponse(json.dumps({'res':False}),content_type="application/json")
-    User.objects.filter(openId=openid).delete()
+    users = User.objects.filter(openId=openid)
+    phone2 = 0
+    if users.exists():
+        phone2 = users[0].phone
+        if(phone2==phone):
+            return HttpResponse(json.dumps({
+                'res':True
+                }),content_type="application/json")
+        else:
+            users.delete()
     if User.objects.filter(phone=phone).exists():
         return HttpResponse(json.dumps({
             'res':False
