@@ -202,7 +202,7 @@ def getOpenId(request):
     if phone.exists():
         phone = phone[0]
         for ud in UserDevice.objects.filter(phone=phone):
-            deviceList.append(getDeviceRight(phone, ud))
+            deviceList.append(getDeviceRight(phone.phone, ud))
         phone = phone.phone
     else:
         phone = ''
@@ -227,7 +227,7 @@ def getPhone(request):
     if phone.exists():
         phone = phone[0]
         for ud in UserDevice.objects.filter(phone=phone):
-            deviceList.append(getDeviceRight(phone, ud))
+            deviceList.append(getDeviceRight(phone.phone, ud))
         phone = phone.phone
     else:
         phone = ''
@@ -262,10 +262,11 @@ def bindPhone(request):
             'res':False
             }),content_type="application/json")
     user = User(phone=phone, openId=openid)
+    deviceId = Device.objects.get(deviceId=1)
     user.save()
     userdevice = UserDevice(
             phone = user,
-            deviceId = 1,
+            deviceId = deviceId,
             remarkName = 'Public',
             source = 0 # 0/1
             )
