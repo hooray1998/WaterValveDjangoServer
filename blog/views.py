@@ -234,7 +234,6 @@ def getPhone(request):
 
     return HttpResponse(json.dumps({
         'res':True,
-        'openid':res['openid'],
         'deviceList':deviceList,
         'phone':phone,
         }),content_type="application/json")
