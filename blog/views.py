@@ -263,6 +263,14 @@ def bindPhone(request):
             }),content_type="application/json")
     user = User(phone=phone, openId=openid)
     user.save()
+    userdevice = UserDevice(
+            phone = user,
+            deviceId = deviceId,
+            remarkName = 'Public',
+            source = 0 # 0/1
+            )
+    userdevice.save()
+
     return HttpResponse(json.dumps({
         'res':True
         }),content_type="application/json")
