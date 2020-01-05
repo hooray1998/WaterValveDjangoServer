@@ -265,7 +265,7 @@ def bindPhone(request):
     user.save()
     userdevice = UserDevice(
             phone = user,
-            deviceId = deviceId,
+            deviceId = 1,
             remarkName = 'Public',
             source = 0 # 0/1
             )
